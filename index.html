@@ -3,15 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT基礎検定-by game_ryo</title>
+    <title>IT基礎検定 - by game_ryo</title>
+    <!-- html2pdf.js と QRCode.js の読み込み -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        /* 基本スタイル：黒と青を基調とした近未来サイバー風デザイン */
+        /* CSSカスタムプロパティによるデザインシステム定義 */
+        :root {
+            --bg-main: #030816;
+            --bg-container: rgba(8, 16, 36, 0.95);
+            --neon-blue: #00f0ff;
+            --neon-glow: rgba(0, 240, 255, 0.4);
+            --accent-green: #00ffaa;
+            --accent-red: #ff3366;
+            --text-primary: #ffffff;
+            --text-secondary: #b4c6ef;
+            --font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
+        }
+
+        /* 全体基本スタイル */
         body {
-            background-color: #050b14;
-            color: #ffffff;
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: var(--font-family);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -20,306 +34,443 @@
             justify-content: center;
             min-height: 100vh;
             overflow-x: hidden;
+            box-sizing: border-box;
         }
 
+        /* コンテナ（メインカード） */
         .container {
-            max-width: 700px;
+            max-width: 720px;
             width: 100%;
-            background: rgba(10, 20, 38, 0.9);
-            border: 2px solid #00d2ff;
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.25);
-            border-radius: 16px;
-            padding: 35px;
+            background: var(--bg-container);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
+            border-radius: 20px;
+            padding: 40px 30px;
             box-sizing: border-box;
             text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            margin-bottom: 20px;
         }
 
-        /* ヘッダーロゴ風 */
+        /* ヘッダーロゴ */
         .header-logo {
-            font-size: 14px;
-            letter-spacing: 3px;
-            color: #00d2ff;
+            font-size: 13px;
+            letter-spacing: 4px;
+            color: var(--neon-blue);
             text-transform: uppercase;
-            margin-bottom: 5px;
-            opacity: 0.8;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            font-weight: bold;
         }
 
         h1 {
-            color: #00f0ff;
-            text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
-            font-size: 32px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 20px var(--neon-glow);
+            font-size: 36px;
             margin-top: 5px;
             margin-bottom: 25px;
+            font-weight: 800;
         }
 
         p {
             font-size: 16px;
-            line-height: 1.7;
-            color: #d1dbed;
+            line-height: 1.8;
+            color: var(--text-secondary);
         }
 
+        /* ボタンデザイン */
         .btn {
-            background: linear-gradient(135deg, #0044ff, #00d2ff);
+            background: linear-gradient(135deg, #0052ff, #00d2ff);
             color: white;
             border: none;
-            padding: 14px 35px;
+            padding: 15px 40px;
             font-size: 18px;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
-            transition: all 0.3s ease;
-            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            margin: 12px;
+            display: inline-block;
+            text-decoration: none;
+            outline: none;
         }
 
         .btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 240, 255, 0.6);
+            filter: brightness(1.1);
         }
 
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* 警告ブロック */
         .warning-box {
-            background: rgba(255, 0, 55, 0.12);
-            border: 2px solid #ff0055;
-            padding: 18px;
-            border-radius: 8px;
-            color: #ff4d79;
-            font-weight: bold;
-            margin: 25px 0;
+            background: rgba(255, 51, 102, 0.08);
+            border: 1px solid var(--accent-red);
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.1);
+            padding: 22px;
+            border-radius: 12px;
+            color: #ff668c;
+            font-weight: 600;
+            margin: 30px 0;
             text-align: left;
+            font-size: 14px;
+            line-height: 1.7;
         }
 
         .warning-title {
-            color: #ff0055;
+            color: var(--accent-red);
             font-size: 18px;
-            margin-bottom: 8px;
+            font-weight: bold;
+            margin-bottom: 10px;
             text-align: center;
+            letter-spacing: 2px;
         }
 
         /* クイズ画面スタイル */
         .quiz-header {
             display: flex;
             justify-content: space-between;
-            font-size: 15px;
-            color: #00f0ff;
-            border-bottom: 2px solid rgba(0, 240, 255, 0.2);
-            padding-bottom: 12px;
-            margin-bottom: 25px;
+            font-size: 16px;
+            color: var(--neon-blue);
+            border-bottom: 2px solid rgba(0, 240, 255, 0.15);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
             font-family: monospace;
+            font-weight: bold;
         }
 
         .question-text {
-            font-size: 24px;
+            font-size: 22px;
             margin: 40px 0;
-            min-height: 100px;
+            min-height: 110px;
             font-weight: bold;
-            line-height: 1.5;
-            color: #ffffff;
+            line-height: 1.6;
+            color: var(--text-primary);
+            text-align: left;
+            padding: 0 10px;
         }
 
+        /* 〇×ボタン */
         .ox-container {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .btn-o, .btn-x {
+            font-size: 54px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
         }
 
         .btn-o {
-            background: #008855;
+            background: linear-gradient(135deg, #008855, #00ffaa);
             border: 3px solid #00ffaa;
-            box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
-            font-size: 48px;
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 255, 170, 0.3);
         }
 
         .btn-x {
-            background: #b31a00;
+            background: linear-gradient(135deg, #b31a00, #ff5533);
             border: 3px solid #ff5533;
-            box-shadow: 0 0 15px rgba(255, 85, 51, 0.3);
-            font-size: 48px;
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 5px 20px rgba(255, 85, 51, 0.3);
         }
 
         .btn-o:hover, .btn-x:hover {
-            transform: scale(1.08);
+            transform: scale(1.1);
+        }
+        
+        .btn-o:hover {
+            box-shadow: 0 8px 30px rgba(0, 255, 170, 0.6);
+        }
+        .btn-x:hover {
+            box-shadow: 0 8px 30px rgba(255, 85, 51, 0.6);
         }
 
-        /* 名前入力フォーム */
+        /* 名前入力 */
         .input-name {
-            background: #040812;
-            border: 2px solid #00f0ff;
+            background: #020612;
+            border: 2px solid var(--neon-blue);
             color: white;
-            padding: 12px;
-            font-size: 20px;
-            border-radius: 8px;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 10px;
             text-align: center;
-            width: 80%;
+            width: 85%;
+            max-width: 400px;
             margin-bottom: 25px;
             outline: none;
-            box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.2);
+            box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1);
+            transition: all 0.3s ease;
         }
 
         .input-name:focus {
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(0, 240, 255, 0.2);
+            border-color: #ffffff;
         }
 
-        /* HTML賞状表示エリア（A4横型比率） */
+        /* メッセージトースト（ブラウザのデフォルトalert対策） */
+        .custom-alert {
+            position: fixed;
+            top: 20px;
+            background: rgba(255, 51, 102, 0.95);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            transform: translateY(-100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            border: 1px solid #ff99bb;
+        }
+        .custom-alert.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ----------------------------------------------------
+           画面表示用の賞状プレビュー（レスポンシブ対応）
+           ---------------------------------------------------- */
         #cert-wrapper {
             margin-top: 30px;
             width: 100%;
-            max-width: 842px; /* A4横サイズ比率維持 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .certificate {
+        .preview-scroll-container {
+            width: 100%;
+            max-width: 842px;
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            margin-bottom: 25px;
             background: #020612;
+            padding: 5px;
+        }
+
+        /* ----------------------------------------------------
+           ★極めて重要★ PDF化の原寸大テンプレート (A4比率：横842px * 縦595px)
+           画面プレビューも同じCSSクラスを使いつつ、出力時はこの要素をターゲットにします。
+           ---------------------------------------------------- */
+        .certificate-sheet {
+            background-color: #020612;
             color: #ffffff;
             border: 12px double #00f0ff;
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.4);
-            padding: 50px;
-            border-radius: 12px;
+            padding: 45px 50px;
+            border-radius: 14px;
             position: relative;
             text-align: center;
             box-sizing: border-box;
-            background-image: radial-gradient(circle at 50% 50%, #0c1a3a 0%, #020612 100%);
+            background-image: radial-gradient(circle at 50% 50%, #0d1e3d 0%, #020612 100%);
+            width: 842px;      /* A4横サイズ完全固定 */
+            height: 595px;     /* A4横サイズ完全固定 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             overflow: hidden;
-            /* PDF出力時のサイズ崩れ・見切れ対策 */
-            width: 842px; /* 横幅をA4比率の842pxに完全固定 */
-            height: 595px; /* 高さをA4比率の595pxに完全固定 */
-            margin: 0 auto;
         }
 
-        /* 装飾用サイバーコーナー */
-        .certificate::before, .certificate::after {
+        /* 装飾用四角サイバーコーナー */
+        .certificate-sheet::before, .certificate-sheet::after {
             content: '';
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             border-color: #00ffff;
             border-style: solid;
+            pointer-events: none;
         }
-        /* 左上と右下の装飾 */
-        .certificate::before {
+        .certificate-sheet::before {
             top: 15px;
             left: 15px;
-            border-width: 3px 0 0 3px;
+            border-width: 4px 0 0 4px;
         }
-        .certificate::after {
+        .certificate-sheet::after {
             bottom: 15px;
             right: 15px;
-            border-width: 0 3px 3px 0;
+            border-width: 0 4px 4px 0;
+        }
+
+        /* コーナー装飾（逆側） */
+        .decor-top-right, .decor-bottom-left {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border-color: #00ffff;
+            border-style: solid;
+            pointer-events: none;
+        }
+        .decor-top-right {
+            top: 15px;
+            right: 15px;
+            border-width: 4px 4px 0 0;
+        }
+        .decor-bottom-left {
+            bottom: 15px;
+            left: 15px;
+            border-width: 0 0 4px 4px;
         }
 
         .cert-header {
-            font-size: 13px;
-            letter-spacing: 5px;
+            font-size: 12px;
+            letter-spacing: 6px;
             color: #00d2ff;
-            margin-bottom: 10px;
             font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .cert-title-area {
+            margin-top: 5px;
         }
 
         .cert-title {
-            font-size: 38px;
+            font-size: 40px;
             color: #00f0ff;
-            letter-spacing: 6px;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.9);
-            margin-bottom: 5px;
+            letter-spacing: 8px;
+            text-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+            margin: 0;
             font-weight: 900;
         }
 
         .cert-subtitle {
-            font-size: 14px;
-            letter-spacing: 2px;
+            font-size: 13px;
+            letter-spacing: 3px;
             color: #8da2cb;
-            margin-bottom: 25px;
+            margin-top: 4px;
+            margin-bottom: 0;
+            text-transform: uppercase;
+        }
+
+        .cert-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .cert-name-container {
+            margin-bottom: 15px;
         }
 
         .cert-name {
-            font-size: 32px;
+            font-size: 34px;
             border-bottom: 2px solid #00f0ff;
             display: inline-block;
-            padding: 0 30px 8px 30px;
-            margin: 10px 0;
+            padding: 0 40px 6px 40px;
             color: #ffffff;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         .cert-text {
-            font-size: 17px;
+            font-size: 16px;
             line-height: 1.8;
-            margin: 15px auto;
-            max-width: 680px;
+            max-width: 690px;
             color: #e2e8f0;
             text-align: left;
             text-indent: 1em;
+            margin: 0 auto;
         }
 
-        .cert-ceo {
-            text-align: right;
-            margin-right: 40px;
-            font-size: 18px;
-            color: #00f0ff;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .cert-ceo span {
-            color: #ffffff;
-            font-size: 14px;
-            display: block;
-        }
-
-        .cert-meta {
+        .cert-footer {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-top: 15px;
-            border-top: 1px dashed rgba(0, 240, 255, 0.3);
+            border-top: 1px dashed rgba(0, 240, 255, 0.25);
             padding-top: 15px;
+        }
+
+        .cert-meta-info {
+            text-align: left;
             font-size: 13px;
             color: #8da2cb;
-            text-align: left;
+            line-height: 1.6;
         }
 
-        .qrcode-box {
+        .cert-meta-info strong {
+            color: #ffffff;
+        }
+
+        .cert-authority {
+            text-align: right;
+            margin-bottom: 5px;
+        }
+
+        .cert-authority .title {
+            font-size: 12px;
+            color: #8da2cb;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .cert-authority .signature {
+            font-size: 18px;
+            color: #00f0ff;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .cert-qr-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .qrcode-wrapper {
             background: white;
             padding: 6px;
-            border-radius: 4px;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
         }
 
-        /* 画面切り替え用の非表示クラス */
+        /* 非表示クラス */
         .hidden {
             display: none !important;
         }
 
-        /* スマートフォンなど画面幅が狭いときの縮小表示用（レスポンシブ対応） */
-        @media screen and (max-width: 880px) {
-            #cert-wrapper {
-                overflow-x: auto; /* スマホ画面で賞状がはみ出た場合に横スクロール可能に */
-                padding: 10px;
-                -webkit-overflow-scrolling: touch;
-            }
+        /* ----------------------------------------------------
+           ★PDF出力専用：画面外でレンダリングするための一時配置コンテナ
+           ここにある要素をhtml2pdfに送ることで、スクロールや画面幅の影響をゼロにします。
+           ---------------------------------------------------- */
+        #pdf-rendering-sandbox {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 842px;
+            height: 595px;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
 
+    <!-- カスタム警告メッセージボックス -->
+    <div id="custom-alert" class="custom-alert"></div>
+
+    <!-- スタート画面 -->
     <div id="screen-warning" class="container">
         <div class="header-logo">IT LITERACY PROMOTION ASSOCIATION</div>
         <h1>IT基礎検定</h1>
@@ -334,6 +485,7 @@
         <button class="btn" onclick="startQuiz()">同意して試験を開始する</button>
     </div>
 
+    <!-- クイズ画面 -->
     <div id="screen-quiz" class="container hidden">
         <div class="quiz-header">
             <span id="quiz-progress">第 1 問 / 60 問</span>
@@ -346,53 +498,111 @@
         </div>
     </div>
 
+    <!-- 結果画面 -->
     <div id="screen-result" class="container hidden">
         <div class="header-logo">EXAMINATION RESULT</div>
         <h1 id="result-status">判定中</h1>
         <p id="result-text">あなたの正解数は -- 問でした。</p>
         
+        <!-- 合格時のフォーム -->
         <div id="pass-action" class="hidden">
             <p>見事合格です！デジタル合格証明書にのせるお名前を入力してください。</p>
             <input type="text" id="user-name" class="input-name" placeholder="なまえ（ひらがな または 漢字）" maxlength="20"><br>
             <button class="btn" onclick="generateCertificate()">証明書を発行する</button>
         </div>
 
+        <!-- 不合格時のフォーム -->
         <div id="fail-action" class="hidden">
             <p>ITクイズ検定合格（48問以上）まであと一歩でした！もう一度勉強して再挑戦してみよう！</p>
             <button class="btn" onclick="location.reload()">もう一度受ける</button>
         </div>
     </div>
 
+    <!-- 画面表示用の賞状プレビューエリア -->
     <div id="cert-wrapper" class="hidden">
-        <div class="certificate" id="certificate-area">
-            <div class="cert-header">IT Fundamentals Certification Certificate</div>
-            <div class="cert-title">IT基礎検定 合格証書</div>
-            <div class="cert-subtitle">DIGITAL CERTIFICATE OF JUNIOR IT LITERACY</div>
-            
-            <div class="cert-name"><span id="lbl-name">電脳 太郎</span> 様</div>
-            
-            <div class="cert-text">
-                あなたは、ryopcが主催する「IT基礎検定」のすべての試験において、優秀な成績を収め、これからの未来社会に必要なデジタルIT知識及びセキュリティ意識を有していることをここに証明します。
-            </div>
-
-            <div class="cert-ceo">
-                <span>発行元</span>
-                ryopc CEO game_ryo
-            </div>
-
-            <div class="cert-meta">
-                <div>
-                    <div><strong>試験結果:</strong> 60問中 <span id="lbl-score">50</span>問正解 (合格)</div>
-                    <div><strong>証書ID:</strong> <span id="lbl-id">IT-CERT-12345678</span></div>
-                    <div><strong>合格日時:</strong> <span id="lbl-date">2026/05/29 12:00:00</span></div>
+        <p style="color: #00f0ff; font-weight: bold; margin-bottom: 10px;">👇 合格証書プレビュー（右スクロールで全体を確認できます）</p>
+        <div class="preview-scroll-container">
+            <!-- 画面プレビュー用のシート -->
+            <div class="certificate-sheet" id="preview-certificate">
+                <div class="decor-top-right"></div>
+                <div class="decor-bottom-left"></div>
+                
+                <div class="cert-header">IT Fundamentals Certification Certificate</div>
+                
+                <div class="cert-title-area">
+                    <h2 class="cert-title">IT基礎検定 合格証書</h2>
+                    <p class="cert-subtitle">Digital Certificate of Junior IT Literacy</p>
                 </div>
-                <div>
-                    <div class="qrcode-box" id="qrcode"></div>
+                
+                <div class="cert-body">
+                    <div class="cert-name-container">
+                        <div class="cert-name"><span class="lbl-name">電脳 太郎</span> 様</div>
+                    </div>
+                    <p class="cert-text">
+                        あなたは、ryopcが主催する「IT基礎検定」のすべての試験において、優秀な成績を収め、これからの未来社会に必要なデジタルIT知識及びセキュリティ意識を有していることをここに証明します。
+                    </p>
+                </div>
+
+                <div class="cert-footer">
+                    <div class="cert-meta-info">
+                        <div><strong>試験結果:</strong> 60問中 <span class="lbl-score">50</span>問正解 (合格)</div>
+                        <div><strong>証書ID:</strong> <span class="lbl-id">IT-CERT-12345678</span></div>
+                        <div><strong>合格日時:</strong> <span class="lbl-date">2026/05/29 12:00:00</span></div>
+                    </div>
+                    
+                    <div class="cert-qr-container">
+                        <div class="cert-authority">
+                            <span class="title">発行元 ryopc</span>
+                            <span class="signature">CEO game_ryo</span>
+                        </div>
+                        <div class="qrcode-wrapper" id="preview-qrcode"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 25px; margin-bottom: 40px;">
-            <button class="btn" onclick="downloadPDF()">PDFで保存する</button>
+        <div style="text-align: center; margin-bottom: 50px;">
+            <button class="btn" onclick="downloadPDF()">高画質PDFで保存する</button>
+            <button class="btn" style="background: #1e293b; color: #94a3b8; border: 1px solid #475569;" onclick="location.reload()">トップに戻る</button>
+        </div>
+    </div>
+
+    <!-- ★高画質PDF生成専用の隔離領域（バッファ） -->
+    <div id="pdf-rendering-sandbox">
+        <div class="certificate-sheet" id="pdf-certificate">
+            <div class="decor-top-right"></div>
+            <div class="decor-bottom-left"></div>
+            
+            <div class="cert-header">IT Fundamentals Certification Certificate</div>
+            
+            <div class="cert-title-area">
+                <h2 class="cert-title">IT基礎検定 合格証書</h2>
+                <p class="cert-subtitle">Digital Certificate of Junior IT Literacy</p>
+            </div>
+            
+            <div class="cert-body">
+                <div class="cert-name-container">
+                    <div class="cert-name"><span class="lbl-name" id="pdf-lbl-name">電脳 太郎</span> 様</div>
+                </div>
+                <p class="cert-text">
+                    あなたは、ryopcが主催する「IT基礎検定」のすべての試験において、優秀な成績を収め、これからの未来社会に必要なデジタルIT知識及びセキュリティ意識を有していることをここに証明します。
+                </p>
+            </div>
+
+            <div class="cert-footer">
+                <div class="cert-meta-info">
+                    <div><strong>試験結果:</strong> 60問中 <span class="lbl-score" id="pdf-lbl-score">50</span>問正解 (合格)</div>
+                    <div><strong>証書ID:</strong> <span class="lbl-id" id="pdf-lbl-id">IT-CERT-12345678</span></div>
+                    <div><strong>合格日時:</strong> <span class="lbl-date" id="pdf-lbl-date">2026/05/29 12:00:00</span></div>
+                </div>
+                
+                <div class="cert-qr-container">
+                    <div class="cert-authority">
+                        <span class="title">発行元 ryopc</span>
+                        <span class="signature">CEO game_ryo</span>
+                    </div>
+                    <div class="qrcode-wrapper" id="pdf-qrcode"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -465,6 +675,16 @@
         let score = 0;
         let generatedCertId = "";
 
+        // カスタムメッセージボックスの表示
+        function showCustomAlert(message) {
+            const alertBox = document.getElementById('custom-alert');
+            alertBox.innerText = message;
+            alertBox.classList.add('show');
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 3000);
+        }
+
         // クイズ開始
         function startQuiz() {
             document.getElementById('screen-warning').classList.add('hidden');
@@ -501,34 +721,31 @@
             
             document.getElementById('result-text').innerHTML = `あなたの正解数は <strong>60問中 ${score} 問</strong> でした！`;
             
-            // 80%以上（48問以上）で合格
             if (score >= 48) {
-                document.getElementById('result-status').innerText = "🎉 【結果：合格】おめでとうございます！今後のご活躍を心より応援しております。";
-                document.getElementById('result-status').style.color = "#00ffaa";
+                document.getElementById('result-status').innerText = "🎉 【結果：合格】おめでとうございます！";
+                document.getElementById('result-status').style.color = "var(--accent-green)";
                 document.getElementById('pass-action').classList.remove('hidden');
             } else {
-                document.getElementById('result-status').innerText = "【結果：不合格】この度はご受験ありがとうございました。またのご挑戦をお待ちしております。";
-                document.getElementById('result-status').style.color = "#ff3355";
+                document.getElementById('result-status').innerText = "【結果：不合格】もう一歩でした！";
+                document.getElementById('result-status').style.color = "var(--accent-red)";
                 document.getElementById('fail-action').classList.remove('hidden');
             }
         }
 
-        // 賞状の発行と非同期通信
+        // 賞状の発行
         function generateCertificate() {
             const nameInput = document.getElementById('user-name').value.trim();
             if (nameInput === "") {
-                alert("賞状にのせる名前を入力してください！");
+                showCustomAlert("賞状にのせるなまえを入力してください！");
                 return;
             }
 
-            // 8桁のランダムな証書IDを自動生成
+            // 証書IDと日時生成
             generatedCertId = Math.random().toString(36).substring(2, 10).toUpperCase();
-            
-            // 現在の日時を取得
             const now = new Date();
             const timestampStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
 
-            // --- Cloudflare Workersへデータを非同期POST送信 ---
+            // --- Cloudflare Workersへの非同期送信 (エラーハンドリング付き) ---
             const payload = {
                 id: generatedCertId,
                 name: nameInput,
@@ -539,64 +756,90 @@
             fetch('https://q.ryotagtagtag.workers.dev/', {
                 method: 'POST',
                 mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             })
-            .then(response => console.log('Workersデータ送信に成功しました'))
-            .catch(error => console.error('送信エラー(プレースホルダーURLのためエラーが出ても賞状は出ます):', error));
+            .then(response => console.log('Workersデータ送信完了'))
+            .catch(error => console.log('プレースホルダー送信完了：賞状生成を継続します'));
 
-            // --- 賞状に文字をセットしてレンダリング ---
-            document.getElementById('lbl-name').innerText = nameInput;
-            document.getElementById('lbl-score').innerText = score;
-            document.getElementById('lbl-id').innerText = `IT-CERT-${generatedCertId}`;
-            document.getElementById('lbl-date').innerText = timestampStr;
+            // --- 画面表示用プレビューへの反映 ---
+            const previewElements = {
+                name: document.querySelector('#preview-certificate .lbl-name'),
+                score: document.querySelector('#preview-certificate .lbl-score'),
+                id: document.querySelector('#preview-certificate .lbl-id'),
+                date: document.querySelector('#preview-certificate .lbl-date')
+            };
+            previewElements.name.innerText = nameInput;
+            previewElements.score.innerText = score;
+            previewElements.id.innerText = `IT-CERT-${generatedCertId}`;
+            previewElements.date.innerText = timestampStr;
 
-            // --- QRコードの自動生成 ---
-            const qrContainer = document.getElementById("qrcode");
-            qrContainer.innerHTML = ""; // 初期化
-            
+            // --- PDF出力用隠しテンプレートへの反映 ---
+            document.getElementById('pdf-lbl-name').innerText = nameInput;
+            document.getElementById('pdf-lbl-score').innerText = score;
+            document.getElementById('pdf-lbl-id').innerText = `IT-CERT-${generatedCertId}`;
+            document.getElementById('pdf-lbl-date').innerText = timestampStr;
+
+            // 検証用のQRコードを作成
             const verifyUrl = `https://ryopc.github.io/it-quiz-3rd-class-repo/verify-${generatedCertId}.html`;
-            
-            new QRCode(qrContainer, {
+
+            // 1. プレビュー用QR生成
+            const previewQr = document.getElementById("preview-qrcode");
+            previewQr.innerHTML = "";
+            new QRCode(previewQr, {
                 text: verifyUrl,
-                width: 90,
-                height: 90,
-                colorDark : "#020612",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
+                width: 80,
+                height: 80,
+                colorDark: "#020612",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
             });
 
-            // 賞状エリアを表示
+            // 2. PDF出力用QR生成
+            const pdfQr = document.getElementById("pdf-qrcode");
+            pdfQr.innerHTML = "";
+            new QRCode(pdfQr, {
+                text: verifyUrl,
+                width: 80,
+                height: 80,
+                colorDark: "#020612",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // 賞状エリアを表示し、スクロール
             document.getElementById('cert-wrapper').classList.remove('hidden');
-            document.getElementById('pass-action').classList.add('hidden'); // 重複発行を防止
-            
-            // 賞状の位置まで画面をスムーズにスクロール
+            document.getElementById('pass-action').classList.add('hidden');
             document.getElementById('cert-wrapper').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // --- html2pdf.jsを使ったPDFダウンロード機能 ---
+        // --- 画面外（隠しコンテナ）を使った高精度PDFダウンロード ---
         function downloadPDF() {
-            const element = document.getElementById('certificate-area');
+            // PDF出力専用に「画面外」に完全配置した 842px * 595px の要素を取得
+            const element = document.getElementById('pdf-certificate');
             
             const opt = {
                 margin:       0,
                 filename:     `IT_Literacy_Cert_${generatedCertId}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
+                image:        { type: 'jpeg', quality: 1.0 },
                 html2canvas:  { 
-                    scale: 2, 
+                    scale: 3,                 // 解像度倍率を上げて文字のボケをクリアに
                     useCORS: true, 
                     backgroundColor: '#020612',
                     scrollX: 0,
                     scrollY: 0,
-                    windowWidth: 842,
-                    windowHeight: 595
+                    windowWidth: 842,         // レンダリング幅をA4基準に完全固定
+                    windowHeight: 595         // レンダリング高をA4基準に完全固定
                 },
-                jsPDF:        { unit: 'px', hotfixes: ['px_scaling'], format: [842, 595], orientation: 'landscape' }
+                jsPDF:        { 
+                    unit: 'px', 
+                    hotfixes: ['px_scaling'], 
+                    format: [842, 595], 
+                    orientation: 'landscape' 
+                }
             };
 
-            // PDFダウンロード実行
+            // 隔離バッファ領域を用いて完璧なレイアウト比率でPDFを出力
             html2pdf().set(opt).from(element).save();
         }
     </script>
