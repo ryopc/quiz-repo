@@ -773,12 +773,6 @@
                 correctLevel : QRCode.CorrectLevel.H
             });
 
-            // 賞状表示エリアの切り替えとスムーズスクロール
-            document.getElementById('cert-wrapper').classList.remove('hidden');
-            document.getElementById('pass-action').classList.add('hidden');
-            document.getElementById('cert-wrapper').scrollIntoView({ behavior: 'smooth' });
-        }
-
         // --- 画面外（隔離バッファ）から高精度PDFダウンロード ---
         function downloadPDF() {
             // 画面の拡大縮小やスクロールに影響されない隔離ノード「#pdf-target-node」をターゲットにする
@@ -794,13 +788,18 @@
                     backgroundColor: '#020612',
                     scrollX: 0,
                     scrollY: 0,
-                    windowWidth: 842,         // キャプチャ幅をA4規格値(横)に固定
-                    windowHeight: 595         // キャプチャ高をA4規格値(縦)に固定
+                    /* 
+                       ★PCバグ解決の修正ポイント：
+                       windowWidth/Heightの制限を外し、width/heightで直接切り取るサイズを指定します。
+                       これにより、PCのブラウザ拡大率（125%等）やスクロールバーの影響を一切受けなくなります。
+                    */
+                    width: 842,                // キャプチャする要素の横幅を固定
+                    height: 595                // キャプチャする要素の縦幅を固定
                 },
                 jsPDF:        { 
                     unit: 'px', 
                     hotfixes: ['px_scaling'], 
-                    format: [842, 595], 
+                    format:, 
                     orientation: 'landscape' 
                 }
             };
@@ -808,6 +807,7 @@
             // PDFダウンロードの実行
             html2pdf().set(opt).from(element).save();
         }
+
     </script>
 </body>
 </html>
