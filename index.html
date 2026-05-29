@@ -546,12 +546,14 @@
 
             // プレースホルダーURLへPOST
             fetch('https://q.ryotagtagtag.workers.dev/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
+fetch('https://q.ryotagtagtag.workers.dev/', {
+    method: 'POST',
+    mode: 'cors', // 🌐 これを追加してCORSモードを明示する
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+})
             .then(response => console.log('Workersデータ送信に成功しました'))
             .catch(error => console.error('送信エラー(プレースホルダーURLのためエラーが出ても賞状は出ます):', error));
 
