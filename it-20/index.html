@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT基礎検定-by game_ryo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        /* 基本スタイル：黒と青を基調とした近未来サイバー風デザイン */
+        body {
+            background-color: #050b14;
+            color: #ffffff;
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(10, 20, 38, 0.9);
+            border: 2px solid #00d2ff;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.25);
+            border-radius: 16px;
+            padding: 35px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* ヘッダーロゴ風 */
+        .header-logo {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #00d2ff;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        h1 {
+            color: #00f0ff;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+            font-size: 32px;
+            margin-top: 5px;
+            margin-bottom: 25px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #d1dbed;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #0044ff, #00d2ff);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.7);
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 55, 0.12);
+            border: 2px solid #ff0055;
+            padding: 18px;
+            border-radius: 8px;
+            color: #ff4d79;
+            font-weight: bold;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .warning-title {
+            color: #ff0055;
+            font-size: 18px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        /* クイズ画面スタイル */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            color: #00f0ff;
+            border-bottom: 2px solid rgba(0, 240, 255, 0.2);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            font-family: monospace;
+        }
+
+        .question-text {
+            font-size: 24px;
+            margin: 40px 0;
+            min-height: 100px;
+            font-weight: bold;
+            line-height: 1.5;
+            color: #ffffff;
+        }
+
+        .ox-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .btn-o {
+            background: #008855;
+            border: 3px solid #00ffaa;
+            box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+            font-size: 48px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-x {
+            background: #b31a00;
+            border: 3px solid #ff5533;
+            box-shadow: 0 0 15px rgba(255, 85, 51, 0.3);
+            font-size: 48px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-o:hover, .btn-x:hover {
+            transform: scale(1.08);
+        }
+
+        /* 名前入力フォーム */
+        .input-name {
+            background: #040812;
+            border: 2px solid #00f0ff;
+            color: white;
+            padding: 12px;
+            font-size: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 80%;
+            margin-bottom: 25px;
+            outline: none;
+            box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .input-name:focus {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        /* HTML賞状表示エリア（A4横型比率） */
+        #cert-wrapper {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 842px; /* A4横サイズ比率維持 */
+        }
+
+        .certificate {
+            background: #020612;
+            color: #ffffff;
+            border: 12px double #00f0ff;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.4);
+            padding: 50px;
+            border-radius: 12px;
+            position: relative;
+            text-align: center;
+            box-sizing: border-box;
+            background-image: radial-gradient(circle at 50% 50%, #0c1a3a 0%, #020612 100%);
+            overflow: hidden;
+            /* PDF出力時のサイズ崩れ・見切れ対策 */
+            width: 842px; /* 横幅をA4比率の842pxに完全固定 */
+            height: 595px; /* 高さをA4比率の595pxに完全固定 */
+            margin: 0 auto;
+        }
+
+        /* 装飾用サイバーコーナー */
+        .certificate::before, .certificate::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-color: #00ffff;
+            border-style: solid;
+        }
+        /* 左上と右下の装飾 */
+        .certificate::before {
+            top: 15px;
+            left: 15px;
+            border-width: 3px 0 0 3px;
+        }
+        .certificate::after {
+            bottom: 15px;
+            right: 15px;
+            border-width: 0 3px 3px 0;
+        }
+
+        .cert-header {
+            font-size: 13px;
+            letter-spacing: 5px;
+            color: #00d2ff;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .cert-title {
+            font-size: 38px;
+            color: #00f0ff;
+            letter-spacing: 6px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.9);
+            margin-bottom: 5px;
+            font-weight: 900;
+        }
+
+        .cert-subtitle {
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #8da2cb;
+            margin-bottom: 25px;
+        }
+
+        .cert-name {
+            font-size: 32px;
+            border-bottom: 2px solid #00f0ff;
+            display: inline-block;
+            padding: 0 30px 8px 30px;
+            margin: 10px 0;
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .cert-text {
+            font-size: 17px;
+            line-height: 1.8;
+            margin: 15px auto;
+            max-width: 680px;
+            color: #e2e8f0;
+            text-align: left;
+            text-indent: 1em;
+        }
+
+        .cert-ceo {
+            text-align: right;
+            margin-right: 40px;
+            font-size: 18px;
+            color: #00f0ff;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .cert-ceo span {
+            color: #ffffff;
+            font-size: 14px;
+            display: block;
+        }
+
+        .cert-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 15px;
+            border-top: 1px dashed rgba(0, 240, 255, 0.3);
+            padding-top: 15px;
+            font-size: 13px;
+            color: #8da2cb;
+            text-align: left;
+        }
+
+        .qrcode-box {
+            background: white;
+            padding: 6px;
+            border-radius: 4px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* 画面切り替え用の非表示クラス */
+        .hidden {
+            display: none !important;
+        }
+
+        /* スマートフォンなど画面幅が狭いときの縮小表示用（レスポンシブ対応） */
+        @media screen and (max-width: 880px) {
+            #cert-wrapper {
+                overflow-x: auto; /* スマホ画面で賞状がはみ出た場合に横スクロール可能に */
+                padding: 10px;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="screen-warning" class="container">
+        <div class="header-logo">IT LITERACY PROMOTION ASSOCIATION</div>
+        <h1>IT基礎検定</h1>
+        <p>未来を創るIT技術やプログラミング、ネットワーク知識を測る試験へようこそ！</p>
+        <p>全部で <strong>60問</strong> の○×クイズが出題されます。<br>合格基準は <strong>80%以上（48問以上の正解）</strong> です。</p>
+        
+        <div class="warning-box">
+            <div class="warning-title">【警告・最重要ルール】</div>
+            この試験の問題や答えを、ほかのお友達に教えたり、インターネットやSNSに書き込んだりしてはいけません。自分自身の知識を試すために、ルールを守って挑戦してください。
+        </div>
+        
+        <button class="btn" onclick="startQuiz()">同意して試験を開始する</button>
+    </div>
+
+    <div id="screen-quiz" class="container hidden">
+        <div class="quiz-header">
+            <span id="quiz-progress">第 1 問 / 60 問</span>
+            <span id="quiz-score-live">正解数: 0</span>
+        </div>
+        <div class="question-text" id="question-text">ここに問題文が表示されます。</div>
+        <div class="ox-container">
+            <button class="btn-o" onclick="submitAnswer(true)">○</button>
+            <button class="btn-x" onclick="submitAnswer(false)">×</button>
+        </div>
+    </div>
+
+    <div id="screen-result" class="container hidden">
+        <div class="header-logo">EXAMINATION RESULT</div>
+        <h1 id="result-status">判定中</h1>
+        <p id="result-text">あなたの正解数は -- 問でした。</p>
+        
+        <div id="pass-action" class="hidden">
+            <p>見事合格です！デジタル合格証明書にのせるお名前を入力してください。</p>
+            <input type="text" id="user-name" class="input-name" placeholder="なまえ（ひらがな または 漢字）" maxlength="20"><br>
+            <button class="btn" onclick="generateCertificate()">証明書を発行する</button>
+        </div>
+
+        <div id="fail-action" class="hidden">
+            <p>ITクイズ検定合格（48問以上）まであと一歩でした！もう一度勉強して再挑戦してみよう！</p>
+            <button class="btn" onclick="location.reload()">もう一度受ける</button>
+        </div>
+    </div>
+
+    <div id="cert-wrapper" class="hidden">
+        <div class="certificate" id="certificate-area">
+            <div class="cert-header">IT Fundamentals Certification Certificate</div>
+            <div class="cert-title">IT基礎検定 合格証書</div>
+            <div class="cert-subtitle">DIGITAL CERTIFICATE OF JUNIOR IT LITERACY</div>
+            
+            <div class="cert-name"><span id="lbl-name">電脳 太郎</span> 様</div>
+            
+            <div class="cert-text">
+                あなたは、ryopcが主催する「IT基礎検定」のすべての試験において、優秀な成績を収め、これからの未来社会に必要なデジタルIT知識及びセキュリティ意識を有していることをここに証明します。
+            </div>
+
+            <div class="cert-ceo">
+                <span>発行元</span>
+                ryopc CEO game_ryo
+            </div>
+
+            <div class="cert-meta">
+                <div>
+                    <div><strong>試験結果:</strong> 60問中 <span id="lbl-score">50</span>問正解 (合格)</div>
+                    <div><strong>証書ID:</strong> <span id="lbl-id">IT-CERT-12345678</span></div>
+                    <div><strong>合格日時:</strong> <span id="lbl-date">2026/05/29 12:00:00</span></div>
+                </div>
+                <div>
+                    <div class="qrcode-box" id="qrcode"></div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 25px; margin-bottom: 40px;">
+            <button class="btn" onclick="downloadPDF()">PDFで保存する</button>
+        </div>
+    </div>
+
+    <script>
+        // 小学生向けのIT・コンピュータ・最新技術に関する全60問のクイズデータ
+        const quizData = [
+            { q: "パソコンの脳みそにあたる、計算や命令をする部品を「CPU」とよぶ。", a: true },
+            { q: "インターネットで使われる「WWW」は、「ワールド・ワイド・ウインドウ」の略である。", a: false },
+            { q: "キーボードのキーにある「Enter（エンター）」は、改行や決定をするときに使う。", a: true },
+            { q: "パソコンのデータを保存する「SSD」は、「HDD」よりもデータの読み書きが遅い。", a: false },
+            { q: "右クリックをすると、色々なメニュー（オプション）が表示されることが多い。", a: true },
+            { q: "プログラミングとは、コンピュータにやってほしいことを命令（プログラム）して動かすことである。", a: true },
+            { q: "インターネット上でホームページを見るときに使うソフト（ChromeやSafariなど）を「ブラウザ」とよぶ。", a: true },
+            { q: "パソコンを動かすための最も基本となるソフト（WindowsやmacOSなど）を「OS」という。", a: true },
+            { q: "Wi-Fi（ワイファイ）は、電波を使って無線でインターネットにつなぐ技術である。", a: true },
+            { q: "インターネットに繋がっているパソコンは、ウイルス対策ソフトを入れなくても絶対に安全である。", a: false },
+            { q: "「URL」とは、インターネット上にあるホームページの「住所（アドレス）」のようなものである。", a: true },
+            { q: "スマホやタブレットの画面に触れて操作する仕組みを「タッチパネル」とよぶ。", a: true },
+            { q: "パソコンを使い終わるときは、コンセントを直接いきなり抜くのが正しい方法である。", a: false },
+            { q: "キーボードの「スペースキー」を押すと、文字と文字のあいだにすきま（空白）をあけることができる。", a: true },
+            { q: "「AI（人工知能）」とは、人間のように自分で考えて判断することができるコンピュータの技術である。", a: true },
+            { q: "「SNS」で自分の個人情報（住所や本名、学校名など）をだれにでも見えるように書くのは危険である。", a: true },
+            { q: "メールの件名（タイトル）は、中身が何かすぐに分かるように短く書くのが良いマナーである。", a: true },
+            { q: "インターネット上で他人の書いた文章や画像を、勝手に自分のものとして使って発表してもよい。", a: false },
+            { q: "コンピュータに侵入してデータを壊したり盗んだりする悪いプログラムを「コンピュータウイルス」とよぶ。", a: true },
+            { q: "パスワードを決めるときは、「123456」や自分の誕生日など、簡単に予想できるものが安全である。", a: false },
+            { q: "インターネットの情報はすべてが正しいため、疑わずに全て信じるべきである。", a: false },
+            { q: "「クラウド（クラウドストレージ）」とは、インターネット上の本棚のような場所にデータを保存できる技術である。", a: true },
+            { q: "パソコンの画面を画像として保存することを「スクリーンショット（スクショ）」という。", a: true },
+            { q: "キーボードでアルファベットの「大文字」をずっと打ちたいときは、Shiftキーを押しながら打つか、Caps Lockをオンにする。", a: true },
+            { q: "キーボードの「Backspace（バックスペース）」キーは、カーソルの「右側」の文字を消すキーである。", a: false },
+            { q: "動画やゲームなどの大きなファイルをダウンロードするときは、モバイル通信よりもWi-Fiを使った方がギガ（データ量）を節約できる。", a: true },
+            { q: "プログラムの間違いやバグを見つけて直す作業のことを「デバッグ」とよぶ。", a: true },
+            { q: "パソコンやゲーム機の中に熱がこもらないようにするため、風を送るファン（扇風機）が内蔵されていることが多い。", a: true },
+            { q: "「QRコード」は、縦と横の2次元に情報を記録しているため、バーコードよりも多くの情報を詰め込める。", a: true },
+            { q: "パソコンを起動したときに最初に表示される背景の画面を「デスクトップ」という。", a: true },
+            { q: "USBメモリは、パソコンからデータを持ち運ぶために使う小さな記録装置である。", a: true },
+            { q: "インターネットで使われる「検索エンジン」とは、調べたい言葉を入力して情報を探すシステムのことである。", a: true },
+            { q: "スマホのアプリやOSを最新の状態にアップデート（更新）することは、安全性を高めるためにも重要である。 ", a: true },
+            { q: "ネットゲームで知り合った人に「ゲームのアイテムをあげるからパスワードを教えて」言われたら、すぐに教えるべきである。", a: false },
+            { q: "パソコンのキーボード配列で、アルファベットの上の列が左から「Q-W-E-R-T-Y」となっている配列をQWERTY配列とよぶ。", a: true },
+            { q: "コンピュータの世界の最小データ単位は「ビット（bit）」である。", a: true },
+            { q: "「1バイト（Byte）」は、一般的に「10ビット」のことである。", a: false },
+            { q: "メタバースとは、インターネット上に作られた3次元の仮想空間（バーチャル空間）のことである。", a: true },
+            { q: "インターネットで買い物をしたり、調べ物をしたりするときの通信を守る暗号化の仕組みを「SSL/TLS」という。", a: true },
+            { q: "パソコンのキーボードにある「F5」キーを押すと、今見ているブラウザのページが最新の状態に更新（リロード）される。", a: true },
+            { q: "「プログラミング言語」とは、コンピュータに命令を伝えるための専用の言葉である。", a: true },
+            { q: "Scratch（スクラッチ）は、ブロックをつなげて楽しくプログラミングが学べるビジュアルプログラミングツールである。", a: true },
+            { q: "パソコンがフリーズ（動かなくなる）したときは、何度もボタンをめちゃくちゃに連打するのが一番良い解決方法である。", a: false },
+            { q: "「アカウント」とは、インターネットのサービスにログイン（入場）するための権利や情報のことである。", a: true },
+            { q: "「フィッシング詐欺（さぎ）」とは、ニセモノのメールやWebサイトを使って、パスワードやカード情報を盗む犯罪である。", a: true },
+            { q: "オンライン会議システム（Zoomなど）で自分の顔を映すために使うカメラを「Webカメラ」とよぶ。", a: true },
+            { q: "キーボードの「Ctrlキー（コントロールキー）」を押しながら「C」を押すと、選択した文字をコピーできる。", a: true },
+            { q: "コピーした文字を貼り付け（ペースト）するときは、Ctrlキーを押しながら「P」を押す。", a: false },
+            { q: "パソコンの作業中に停電などでデータが消えないよう、こまめに「上書き保存（セーブ）」をすることが大切である。", a: true },
+            { q: "3Dプリンタは、紙にインクで文字を印刷するのと同じように、立体的なもの（おもちゃなど）を作り出すことができる装置である。", a: true },
+            { q: "「Cookie（クッキー）」とは、ウェブサイトを訪れたユーザーの情報を、ブラウザに一時的に保存しておく仕組みである。", a: true },
+            { q: "コンピュータのハードウェア（機械本体）に対して、プログラムやアプリのことを「ソフトウェア」とよぶ。", a: true },
+            { q: "スマホの「位置情報（GPS）」をオンにして撮った写真をネットに載せると、撮影した場所が他人に知られてしまう危険がある。", a: true },
+            { q: "インターネットでのマナー（ルール）のことを「ネチケット」や「情報モラル」とよぶ。", a: true },
+            { q: "キーボードの「Esc（エスケープ）」キーは、操作を取り消したり、途中でやめたりするときに使うキーである。", a: true },
+            { q: "「スパムメール」とは、送る側の許可なく大量に送りつけられる迷惑メールのことである。", a: true },
+            { q: "コンピュータの内蔵時計やカレンダーは、パソコンの電源を完全に切っても、内部の小さな電池によって動き続けている。", a: true },
+            { q: "パソコンの画面に表示されるフォルダーやファイルの見た目を、分かりやすく小さな絵にしたものを「アイコン」という。", a: true },
+            { q: "「オープンソース（OSS）」とは、プログラムの設計図（ソースコード）が無料公開されており、誰でも自由に改良できるソフトウェアである。", a: true },
+            { q: "インターネット上で他人の悪口を書き込んだり、意地悪なメッセージを送る行為は、絶対にやってはいけないことである。", a: true }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let generatedCertId = "";
+
+        // クイズ開始
+        function startQuiz() {
+            document.getElementById('screen-warning').classList.add('hidden');
+            document.getElementById('screen-quiz').classList.remove('hidden');
+            showQuestion();
+        }
+
+        // 問題を表示
+        function showQuestion() {
+            document.getElementById('quiz-progress').innerText = `第 ${currentQuestion + 1} 問 / 60 問`;
+            document.getElementById('quiz-score-live').innerText = `正解数: ${score}`;
+            document.getElementById('question-text').innerText = quizData[currentQuestion].q;
+        }
+
+        // 回答ボタンが押されたとき
+        function submitAnswer(userAnswer) {
+            if (userAnswer === quizData[currentQuestion].a) {
+                score++;
+            }
+            
+            currentQuestion++;
+            
+            if (currentQuestion < quizData.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // 結果発表
+        function showResult() {
+            document.getElementById('screen-quiz').classList.add('hidden');
+            document.getElementById('screen-result').classList.remove('hidden');
+            
+            document.getElementById('result-text').innerHTML = `あなたの正解数は <strong>60問中 ${score} 問</strong> でした！`;
+            
+            // 80%以上（48問以上）で合格
+            if (score >= 48) {
+                document.getElementById('result-status').innerText = "🎉 【結果：合格】おめでとうございます！今後のご活躍を心より応援しております。";
+                document.getElementById('result-status').style.color = "#00ffaa";
+                document.getElementById('pass-action').classList.remove('hidden');
+            } else {
+                document.getElementById('result-status').innerText = "【結果：不合格】この度はご受験ありがとうございました。またのご挑戦をお待ちしております。";
+                document.getElementById('result-status').style.color = "#ff3355";
+                document.getElementById('fail-action').classList.remove('hidden');
+            }
+        }
+
+        // 賞状の発行と非同期通信
+        function generateCertificate() {
+            const nameInput = document.getElementById('user-name').value.trim();
+            if (nameInput === "") {
+                alert("賞状にのせる名前を入力してください！");
+                return;
+            }
+
+            // 8桁のランダムな証書IDを自動生成
+            generatedCertId = Math.random().toString(36).substring(2, 10).toUpperCase();
+            
+            // 現在の日時を取得
+            const now = new Date();
+            const timestampStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+
+            // --- Cloudflare Workersへデータを非同期POST送信 ---
+            const payload = {
+                id: generatedCertId,
+                name: nameInput,
+                score: score,
+                timestamp: timestampStr
+            };
+
+            fetch('https://q.ryotagtagtag.workers.dev/', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => console.log('Workersデータ送信に成功しました'))
+            .catch(error => console.error('送信エラー(プレースホルダーURLのためエラーが出ても賞状は出ます):', error));
+
+            // --- 賞状に文字をセットしてレンダリング ---
+            document.getElementById('lbl-name').innerText = nameInput;
+            document.getElementById('lbl-score').innerText = score;
+            document.getElementById('lbl-id').innerText = `IT-CERT-${generatedCertId}`;
+            document.getElementById('lbl-date').innerText = timestampStr;
+
+            // --- QRコードの自動生成 ---
+            const qrContainer = document.getElementById("qrcode");
+            qrContainer.innerHTML = ""; // 初期化
+            
+            const verifyUrl = `https://ryopc.github.io/it-quiz-3rd-class-repo/verify-${generatedCertId}.html`;
+            
+            new QRCode(qrContainer, {
+                text: verifyUrl,
+                width: 90,
+                height: 90,
+                colorDark : "#020612",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            // 賞状エリアを表示
+            document.getElementById('cert-wrapper').classList.remove('hidden');
+            document.getElementById('pass-action').classList.add('hidden'); // 重複発行を防止
+            
+            // 賞状の位置まで画面をスムーズにスクロール
+            document.getElementById('cert-wrapper').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- html2pdf.jsを使ったPDFダウンロード機能 ---
+        function downloadPDF() {
+            const element = document.getElementById('certificate-area');
+            
+            const opt = {
+                margin:       0,
+                filename:     `IT_Literacy_Cert_${generatedCertId}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true, 
+                    backgroundColor: '#020612',
+                    scrollX: 0,
+                    scrollY: 0,
+                    windowWidth: 842,
+                    windowHeight: 595
+                },
+                jsPDF:        { unit: 'px', hotfixes: ['px_scaling'], format: [842, 595], orientation: 'landscape' }
+            };
+
+            // PDFダウンロード実行
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
