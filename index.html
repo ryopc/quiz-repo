@@ -180,7 +180,6 @@
 
         /* HTML賞状表示エリア（A4横型比率） */
         #cert-wrapper {
-            display: none;
             margin-top: 30px;
             width: 100%;
             max-width: 842px; /* A4横サイズ比率維持 */
@@ -579,7 +578,7 @@
             });
 
             // 賞状エリアを表示
-            document.getElementById('cert-wrapper').style.display = 'block';
+            document.getElementById('cert-wrapper').classList.remove('hidden');
             document.getElementById('pass-action').classList.add('hidden'); // 重複発行を防止
             
             // 賞状の位置まで画面をスムーズにスクロール
