@@ -64,7 +64,7 @@
         <p>・4つの選択肢の中から、もっとも正しいものを1つ選んでください。</p>
         <p>・<strong>３２問（8割）</strong> 以上正解すると、最高位「1級合格」となります！</p>
       </div>
-      <button onclick="startGame()" class="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xl md:text-2xl px-12 py-5 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition duration-200 border-b-4 border-amber-700">
+      <button onclick="startGame()" class="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xl md:text-2xl px-12 py-5 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition duration-200">
         検定を開始する！🏁
       </button>
     </div>
@@ -113,10 +113,10 @@
         </div>
         <h3 class="text-2xl font-black text-amber-400 mb-4 tracking-wider">🏆 1級 合格証書 🏆</h3>
         <p class="text-slate-300 text-sm md:text-base leading-loose font-bold text-left px-2">
-          あなたはIT検定 1級において、極めて高度な専門知識、ネットワーク技術、並びに現代デジタル社会における優れたセキュリティマナーを完全に修得していることをここに証明します。
+          あなたはIT検定 1級において、極めて高度な専門知識、ネットワーク技術、並びに現代デジタル社会における優れたセキュリティマナーを完全に身につけていることをここに証明します。
         </p>
         <p class="text-right text-amber-400 mt-4 text-xs md:text-sm font-bold">
-          IT検定実施委員会 最高責任者 より 🏅
+          ryopc こうしき より 🏅
         </p>
       </div>
 
@@ -145,7 +145,7 @@
   <!-- JavaScriptによるクイズ制御 -->
   <script>
     // 40問のクイズデータ（漢字、6年生向け、1級プロレベル、絵文字付き）
-    const questions = [
+    const questionPool = [
       {
         emoji: "🔢",
         text: "コンピュータが内部ですべてのデータを処理するために使用する、0と1だけで表される数の表現方法を何と呼ぶ？",
@@ -154,7 +154,7 @@
       },
       {
         emoji: "💾",
-        text: "コンピュータが扱うデータの最小単位を「ビット(bit)」と言いますが、8ビットをまとめて表す、ファイル容量などでよく使う単位はどれ？",
+        text: "コンピュータが扱うデータの最小単位を「ビット(bit)」と言いますが、8ビットをまとめて表す、ファイル容量などでよく使う単位は？",
         choices: ["1 バイト（Byte）", "1 キロバイト（KB）", "1 メガバイト（MB）", "1 ギガバイト（GB）"],
         answer: 0
       },
@@ -202,7 +202,7 @@
       },
       {
         emoji: "👁️",
-        text: "システムを安全に保つための3大要素（機密性・完全性・可用性）のうち、「情報が書き換えられたり壊されたりせず、正しい状態に保たれていること」を何という？",
+        text: "システムを安全に保つための3大要素（機密性・完全性・可用性）のうち、「情報が書き換えられたり壊されたりせず、正しい状態に保たれている」ことを指す言葉は？",
         choices: ["機密性（きみつせい）", "完全性（かんぜんせい）", "可用性（かようせい）", "信頼性（しんらいせい）"],
         answer: 1
       },
@@ -233,7 +233,7 @@
       {
         emoji: "📂",
         text: "オープンソースソフトウェア（OSS）の説明として、最も正しいものはどれ？",
-        choices: ["プログラムの設計図（ソースコード）が無料公開されており、誰でも改造や配付ができる", "お店で売られている有料のソフト", "インターネットに繋がないと動かないアプリ", "学校の授業だけで使って良いプログラミング教材"],
+        choices: ["プログラムの設計図（ソースコード）が無料公開されており、誰でも改造や配付ができる", "お店で売られている有料のソフト", "インターネットからダウンロードしてはいけないソフト", "企業秘密のプログラム"],
         answer: 0
       },
       {
@@ -262,7 +262,7 @@
       },
       {
         emoji: "📊",
-        text: "世界中のあらゆるセンサーやコンピュータから集まる、単に容量が大きいだけでなく、種類が豊富で更新スピードが極めて速い膨大なデータを何という？",
+        text: "世界中のあらゆるセンサーやコンピュータから集まる、単に容量が大きいだけでなく、種類が豊富で更新スピードが極めて速い膨大なデータのことは？",
         choices: ["メガデータ", "ギガファイル", "ビッグデータ", "クラウドベース"],
         answer: 2
       },
@@ -280,13 +280,13 @@
       },
       {
         emoji: "📈",
-        text: "整列された（順番に並んだ）データの中から、真ん中の値を基準にして探す範囲を半分ずつに絞り込みながら高速に目的のデータを探すアルゴリズムは？",
+        text: "整列された（順番に並んだ）データの中から、真ん中の値を基準にして探す範囲を半分ずつに絞り込みながら高速に目的のデータを探す方法は？",
         choices: ["線形探索（リニアサーチ）", "二分探索（バイナリサーチ）", "ハッシュ探索", "バブルソート"],
         answer: 1
       },
       {
         emoji: "🚨",
-        text: "ウイルスのようにプログラムを壊すのではなく、画面いっぱいに脅迫文を表示して「元に戻してほしければお金を払え」と要求する悪質なマルウェアは？",
+        text: "ウイルスのようにプログラムを壊すのではなく、画面いっぱいに脅迫文を表示して「元に戻してほしければお金を払え」と要求する悪質なプログラムは？",
         choices: ["トロイの木馬", "スパイウェア", "ランサムウェア", "ワーム"],
         answer: 2
       },
@@ -298,7 +298,7 @@
       },
       {
         emoji: "👥",
-        text: "インターネット上で特定の「アカウント」にログインする際、IDとパスワードだけでなく、スマホのSMSに送られる1回限りの番号などを追加して確認するセキュリティ対策は？",
+        text: "インターネット上で特定の「アカウント」にログインする際、IDとパスワードだけでなく、スマホのSMSに送られる1回限りの番号などを追加で入力する認証方法は？",
         choices: ["シングルサインオン", "二要素（多要素）認証", "ワンタッチアクセス", "バイオメトリクス設定"],
         answer: 1
       },
@@ -311,12 +311,12 @@
       {
         emoji: "💾",
         text: "SSD（ソリッド・ステート・ドライブ）が、昔のHDD（ハード・ディスク・ドライブ）に比べて優れている最大のポイントは？",
-        choices: ["価格が半分以下であること", "磁気テープを使っていること", "データの読み書き速度が非常に高速で、衝撃に強いこと", "サイズが大きく重いこと"],
+        choices: ["価格が半分以下であること", "磁気テープを使っていること", "データの読み書き速度が非常に高速で、衝撃に強いこと", "サイズが大きいこと"],
         answer: 2
       },
       {
         emoji: "🖼️",
-        text: "自分が作った作品に「非営利であれば自由に使って良い」「作者の名前を載せてね」といった、利用の条件をわかりやすいマークで表示する世界共通のライセンスは？",
+        text: "自分が作った作品に「非営利であれば自由に使って良い」「作者の名前を載せてね」といった、利用の条件をわかりやすいマークで表示する仕組みは？",
         choices: ["特許ライセンス", "クリエイティブ・コモンズ", "著作権フリーシール", "パブリックドメイン"],
         answer: 1
       },
@@ -334,13 +334,13 @@
       },
       {
         emoji: "🤝",
-        text: "インターネット上で意見が対立した際、売り言葉に買い言葉で激しく誹謗中傷（悪口）を言い合い、話し合いが収拾のつかないほど大荒れになる現象を何という？",
+        text: "インターネット上で意見が対立した際、売り言葉に買い言葉で激しく誹謗中傷（悪口）を言い合い、話し合いが収拾のつかないほど大荒れになることを何という？",
         choices: ["炎上（えんじょう）", "クラッキング", "スパム", "フィッシング"],
         answer: 0
       },
       {
         emoji: "🌐",
-        text: "世界中のネットワークを中継する重要な機器で、パケットに宛先（IPアドレス）を見て「どの道を通せば最短で届くか」を判断して送り出す装置は？",
+        text: "世界中のネットワークを中継する重要な機器で、パケットに宛先（IPアドレス）を見て「どの道を通せば最短で届くか」を判断して送り出す機器は？",
         choices: ["ハブ（Hub）", "ルーター（Router）", "モデム（Modem）", "ハードディスク（HDD）"],
         answer: 1
       },
@@ -388,8 +388,20 @@
       }
     ];
 
+    let questions = [];
     let currentQuestionIndex = 0;
     let score = 0;
+    let shuffledAnswers = {};
+
+    // Fisher-Yatesシャッフル
+    function shuffleArray(array) {
+      const result = [...array];
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+      return result;
+    }
 
     // Web Audio API による効果音生成（外部ファイル不要で動作）
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -457,8 +469,11 @@
       if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
+      // 問題をシャッフル
+      questions = shuffleArray(questionPool);
       currentQuestionIndex = 0;
       score = 0;
+      shuffledAnswers = {};
       document.getElementById('start-screen').classList.add('hidden');
       document.getElementById('result-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('hidden');
@@ -487,6 +502,11 @@
 
       document.getElementById('question-text').innerText = q.text;
 
+      // 選択肢をシャッフル
+      const shuffledChoices = shuffleArray(q.choices);
+      const correctAnswerNewIndex = shuffledChoices.indexOf(q.choices[q.answer]);
+      shuffledAnswers[currentQuestionIndex] = correctAnswerNewIndex;
+
       // 選択肢ボタンの作成
       const choicesContainer = document.getElementById('choices-container');
       choicesContainer.innerHTML = '';
@@ -499,9 +519,9 @@
         'from-purple-700 to-fuchsia-700 hover:from-purple-600 hover:to-fuchsia-600 border-fuchsia-900 text-white'
       ];
 
-      q.choices.forEach((choice, index) => {
+      shuffledChoices.forEach((choice, index) => {
         const btn = document.createElement('button');
-        btn.className = `w-full bg-gradient-to-r ${colors[index % colors.length]} font-bold text-sm md:text-base py-3.5 px-5 rounded-2xl shadow-lg border-b-4 transform active:scale-95 transition-all text-left flex items-center space-x-3`;
+        btn.className = `w-full bg-gradient-to-r ${colors[index % colors.length]} font-bold text-sm md:text-base py-3.5 px-5 rounded-2xl shadow-lg border-b-4 transform active:scale-95 transition-all text-left flex items-center gap-3`;
         
         // 選択肢の番号表示
         const badge = document.createElement('span');
@@ -521,8 +541,7 @@
 
     // 選択肢が選ばれたときの判定
     function selectChoice(selectedIndex) {
-      const q = questions[currentQuestionIndex];
-      const isCorrect = (selectedIndex === q.answer);
+      const isCorrect = (selectedIndex === shuffledAnswers[currentQuestionIndex]);
 
       // フィードバック表示の準備
       const overlay = document.getElementById('feedback-overlay');
