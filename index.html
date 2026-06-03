@@ -106,6 +106,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            margin-top: 0;
         }
 
         header::before {
@@ -310,7 +311,6 @@
             transition: var(--transition);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             text-decoration: none;
-            display: inline-flex;
         }
 
         .btn-primary {
@@ -392,6 +392,7 @@
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: block;
         }
 
@@ -453,6 +454,7 @@
                 align-items: center;
                 gap: 1.5rem;
                 box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+                z-index: 999;
             }
             .menu-toggle { display: flex; }
             
@@ -493,7 +495,7 @@
             <span>キッズIT検定</span>
         </div>
         
-
+        <div class="nav-right">
             <button class="menu-toggle" id="menuToggle" aria-label="メニューを開く">
                 <span></span><span></span><span></span>
             </button>
@@ -628,23 +630,22 @@
             <p data-t="content_cat5_desc">Scratch、Pythonなどの基本的なプログラミング概念</p>
         </section>
 
-        <!-- 受験者の声 -->
+        <!-- 開発者紹介 -->
         <section class="card">
             <h2 data-t="testimonials_title">開発者</h2>
             
             <div class="testimonials">
                 <div class="testimonial">
-                <div class="testimonial-author" data-t="testimonial1_author">game_ryo</div>
-
-    <section>
-    <div class="testimonial-text" data-t="testimonial1_text">
-        <p>プロフィール 名前：game_ryo</p>
-        <p>パソコンとかスマホいじるのが好きで、サーバー作ったりアプリ作ったりしてる人。</p>
-        <p>Scratchでちょっといろいろやったり、チャットとかSNSっぽいの作ったりして遊んでます。</p>
-        <p>AIとかも好きで、いろいろ試して「これ動くじゃん」ってなるのが楽しいタイプ。</p>
-    </div>
-</section>
-
+                    <div class="testimonial-author" data-t="testimonial1_author">game_ryo</div>
+                    <div class="testimonial-text" data-t="testimonial1_text">
+                        <p><strong>プロフィール</strong></p>
+                        <p>パソコンとかスマホいじるのが好きで、サーバー作ったりアプリ作ったりしてる人。</p>
+                        <p>Scratchでちょっといろいろやったり、チャットとかSNSっぽいの作ったりして遊んでます。</p>
+                        <p>AIとかも好きで、いろいろ試して「これ動くじゃん」ってなるのが楽しいタイプ。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- CTA セクション -->
         <section class="card" id="start">
@@ -680,7 +681,6 @@
 
     <script>
 
-
     // --- ハンバーガーメニューの開閉処理 ---
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
@@ -708,15 +708,11 @@
         });
     }
 
-    // --- 言語切り替え機能 ---
-
     // --- セーフストレージ ---
     const safeStorage = {
         get: (key) => { try { return localStorage.getItem(key); } catch (e) { return window['fb_' + key] || null; } },
         set: (key, val) => { try { localStorage.setItem(key, val); } catch (e) { window['fb_' + key] = val; } }
     };
-
-    // 初期化時に保存された言語設定を読み込む
 
     // --- スクロールインジケーターの制御 ---
     window.addEventListener('scroll', () => {
