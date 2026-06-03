@@ -64,7 +64,7 @@
         <p>・4択または3択の中から、正しいものを1つ選んでください。</p>
         <p>・<strong>２４問（8割）</strong> 以上正解すると「合格（ごうかく）」です！</p>
       </div>
-      <button onclick="startGame()" class="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-bold text-xl md:text-2xl px-12 py-5 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition duration-200 border-b-4 border-indigo-700">
+      <button onclick="startGame()" class="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-bold text-xl md:text-2xl px-12 py-5 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition duration-200">
         検定を開始する！🏁
       </button>
     </div>
@@ -116,7 +116,7 @@
           あなたはIT検定 準1級において、小学校5年生レベルの高度なIT知識と情報マナーを身につけていることをここに証明します。
         </p>
         <p class="text-right text-indigo-400 mt-4 text-xs md:text-sm font-bold">
-          IT検定実施委員会 より 🏅
+          ryopc こうしき より 🏅
         </p>
       </div>
 
@@ -145,7 +145,7 @@
   <!-- JavaScriptによるクイズ制御 -->
   <script>
     // 30問のクイズデータ（漢字、5年生向け、準1級ちょい難レベル、絵文字付き）
-    const questions = [
+    const questionPool = [
       {
         emoji: "⌨️",
         text: "キーボードで文字を打つ際、基本となる手の手元位置（ホームポジション）で、左手と右手の「人差し指」を置く目印の突起がある２つのキーは？",
@@ -328,8 +328,20 @@
       }
     ];
 
+    let questions = [];
     let currentQuestionIndex = 0;
     let score = 0;
+    let shuffledAnswers = {};
+
+    // Fisher-Yatesシャッフル
+    function shuffleArray(array) {
+      const result = [...array];
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+      return result;
+    }
 
     // Web Audio API による効果音生成（外部ファイル不要で動作）
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -397,8 +409,11 @@
       if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
+      // 問題をシャッフル
+      questions = shuffleArray(questionPool);
       currentQuestionIndex = 0;
       score = 0;
+      shuffledAnswers = {};
       document.getElementById('start-screen').classList.add('hidden');
       document.getElementById('result-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('hidden');
@@ -427,6 +442,11 @@
 
       document.getElementById('question-text').innerText = q.text;
 
+      // 選択肢をシャッフル
+      const shuffledChoices = shuffleArray(q.choices);
+      const correctAnswerNewIndex = shuffledChoices.indexOf(q.choices[q.answer]);
+      shuffledAnswers[currentQuestionIndex] = correctAnswerNewIndex;
+
       // 選択肢ボタンの作成
       const choicesContainer = document.getElementById('choices-container');
       choicesContainer.innerHTML = '';
@@ -439,9 +459,9 @@
         'from-fuchsia-600 to-pink-600 hover:from-fuchsia-500 hover:to-pink-500 border-pink-800 text-white'
       ];
 
-      q.choices.forEach((choice, index) => {
+      shuffledChoices.forEach((choice, index) => {
         const btn = document.createElement('button');
-        btn.className = `w-full bg-gradient-to-r ${colors[index % colors.length]} font-bold text-base md:text-lg py-3 px-5 rounded-2xl shadow-lg border-b-4 transform active:scale-95 transition-all text-left flex items-center space-x-3`;
+        btn.className = `w-full bg-gradient-to-r ${colors[index % colors.length]} font-bold text-base md:text-lg py-3 px-5 rounded-2xl shadow-lg border-b-4 transform active:scale-95 transition-all text-left flex items-center gap-3`;
         
         // 選択肢の番号表示
         const badge = document.createElement('span');
@@ -461,8 +481,7 @@
 
     // 選択肢が選ばれたときの判定
     function selectChoice(selectedIndex) {
-      const q = questions[currentQuestionIndex];
-      const isCorrect = (selectedIndex === q.answer);
+      const isCorrect = (selectedIndex === shuffledAnswers[currentQuestionIndex]);
 
       // フィードバック表示の準備
       const overlay = document.getElementById('feedback-overlay');
