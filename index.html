@@ -483,6 +483,67 @@
             .testimonials { grid-template-columns: 1fr; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
+          .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border-radius: 14px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(0, 191, 255, 0.15);
+        }
+        select.form-control {
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 1.25rem center;
+            background-size: 1rem;
+            padding-right: 3rem;
+        }
+        .form-submit-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: var(--gradient-accent);
+            color: var(--white);
+            border: none;
+            padding: 1.25rem 2.5rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(0, 82, 204, 0.15);
+            margin-top: 2rem;
+        }
+        .form-submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 82, 204, 0.25);
+        }
     </style>
 </head>
 <body>
@@ -582,32 +643,38 @@
             <h2 data-t="levels_title">難易度レベル</h2>
             <p data-t="levels_desc" style="margin-bottom: 2rem;">4つのレベルから、自分に合ったチャレンジができます</p>
             
-       <a href="/3級/" class="levels-container" style="text-decoration: none; color: inherit;">
-            <div class="levels-container">
-                <div class="level-badge level-bronze">
-                    <div class="level-badge-title">🥉 3級</div>
-                    <div class="level-badge-desc" data-t="level_bronze">初心者向け<br>基本操作を学ぶ</div>
-                </div>
+<a href="/3級/" class="levels-container" style="text-decoration: none; color: inherit;">
+    <div class="level-badge level-bronze">
+        <div class="level-badge-title">🥉 3級</div>
+        <div class="level-badge-desc" data-t="level_bronze">初心者向け<br>基本操作を学ぶ</div>
+    </div>
+</a>
+
         <a href="/2級/" class="levels-container" style="text-decoration: none; color: inherit;">
                 <div class="level-badge level-silver">
                     <div class="level-badge-title">🥈 2級</div>
                     <div class="level-badge-desc" data-t="level_silver">初級者向け<br>インターネットに関してのマナー</div>
                 </div>
+        </a>
         <a href="/準1級/" class="levels-container" style="text-decoration: none; color: inherit;">      
                 <div class="level-badge level-gold">
                     <div class="level-badge-title">🥇 準1級</div>
                     <div class="level-badge-desc" data-t="level_gold">中級者向け<br>ITの専門的な知識</div>
                 </div>
+        </a>
         <a href="/1級/" class="levels-container" style="text-decoration: none; color: inherit;">      
                 <div class="level-badge level-platinum">
                     <div class="level-badge-title">💎 1級</div>
                     <div class="level-badge-desc" data-t="level_platinum">上級者向け<br>実践的なスキル</div>
                 </div>
+        </a>
                     <a href="/小学生向けit理解度確認テスト/" class="levels-container" style="text-decoration: none; color: inherit;">      
                 <div class="level-badge level-platinum">
                     <div class="level-badge-title">👑 小学生向けit理解度確認テスト</div>
                     <div class="level-badge-desc" data-t="level_platinum">超上級者向け<br>実践的なスキル、ITに関しての知識を測定する検定</div>
                 </div>
+                    </a>
+        
             </div>
         </section>
 
