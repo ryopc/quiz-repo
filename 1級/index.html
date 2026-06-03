@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小学生向け IT検定 1級</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts (Kiwi Maru & Montserrat) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Kiwi Maru', serif;
+    }
+    .font-english {
+      font-family: 'Montserrat', sans-serif;
+    }
+    /* アニメーション効果 */
+    .bounce-in {
+      animation: bounceIn 0.5s ease-out;
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .wiggle {
+      animation: wiggle 0.5s ease-in-out infinite;
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-gray-950 via-slate-900 to-gray-950 min-h-screen flex flex-col items-center justify-between p-4 selection:bg-amber-500 selection:text-black text-slate-100">
+
+  <!-- ヘッダー -->
+  <header class="w-full max-w-2xl text-center py-4">
+    <h1 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 drop-shadow-md font-english tracking-wider">
+      💻 IT検定 1級 💻
+    </h1>
+    <p class="text-xs md:text-sm text-amber-300 mt-1 font-bold tracking-widest font-english">
+      LEVEL: PROFESSIONAL (ELEMENTARY GRADE 6)
+    </p>
+  </header>
+
+  <!-- メインコンテンツ表示エリア -->
+  <main class="w-full max-w-2xl bg-slate-900 rounded-3xl shadow-2xl border-4 border-amber-500 p-6 md:p-8 flex-grow flex flex-col justify-between my-2 relative overflow-hidden">
+    
+    <!-- スタート画面 -->
+    <div id="start-screen" class="flex flex-col items-center justify-center text-center py-2 space-y-6">
+      <div class="text-6xl wiggle">🏆</div>
+      <h2 class="text-2xl md:text-3xl font-bold text-amber-400 leading-relaxed">
+        ITの最高峰に挑め！<br>大人も手強いプロの世界
+      </h2>
+      <div class="bg-slate-950 border-2 border-amber-500 rounded-2xl p-4 text-left text-slate-300 space-y-2 text-xs md:text-sm leading-relaxed">
+        <p class="font-bold text-center text-amber-400 mb-2">⭐ 1級のルール ⭐</p>
+        <p>・クイズは超難問を含む全部で <strong>４０問</strong> 出題されます。</p>
+        <p>・ネットワーク、セキュリティ、アルゴリズム、ハードウェアの応用分野が出題。</p>
+        <p>・4つの選択肢の中から、もっとも正しいものを1つ選んでください。</p>
+        <p>・<strong>３２問（8割）</strong> 以上正解すると、最高位「1級合格」となります！</p>
+      </div>
+      <button onclick="startGame()" class="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xl md:text-2xl px-12 py-5 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition duration-200 border-b-4 border-amber-700">
+        検定を開始する！🏁
+      </button>
+    </div>
+
+    <!-- クイズ画面（初期は非表示） -->
+    <div id="quiz-screen" class="hidden flex-col justify-between h-full space-y-6">
+      <!-- 進行度バー -->
+      <div>
+        <div class="flex justify-between items-center text-slate-400 font-bold mb-1 text-sm md:text-base">
+          <span id="question-number-text" class="text-amber-400 text-lg">第 1 問 / 40問</span>
+          <span id="score-text">正解数: 0</span>
+        </div>
+        <div class="w-full bg-slate-800 h-4 rounded-full overflow-hidden">
+          <div id="progress-bar" class="bg-gradient-to-r from-amber-500 to-yellow-400 h-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- 問題文エリア -->
+      <div class="text-center py-2 flex-grow flex flex-col justify-center">
+        <!-- イラスト代わりの大きな絵文字 -->
+        <div id="question-emoji" class="text-6xl md:text-7xl mb-4 bounce-in">🌐</div>
+        <h3 id="question-text" class="text-base md:text-lg font-bold text-slate-100 leading-relaxed px-2">
+          ここに問題文が入ります。
+        </h3>
+      </div>
+
+      <!-- 選択肢ボタンエリア -->
+      <div id="choices-container" class="grid grid-cols-1 gap-3 w-full">
+        <!-- ボタンはJavaScriptで動的に作ります -->
+      </div>
+    </div>
+
+    <!-- 結果・合格証書画面（初期は非表示） -->
+    <div id="result-screen" class="hidden flex-col items-center justify-center text-center py-4 space-y-6">
+      <div id="result-emoji" class="text-7xl bounce-in">👑</div>
+      <h2 id="result-title" class="text-3xl font-bold text-amber-400">お疲れさまでした！</h2>
+      
+      <p id="result-score-details" class="text-xl text-slate-300 font-bold">
+        40問中 32問正解！
+      </p>
+
+      <!-- 合格証書 (超高級感・ゴールドベースのサイバーデザイン) -->
+      <div id="certificate" class="border-4 border-amber-400 bg-slate-950 p-6 rounded-2xl shadow-inner max-w-md w-full relative">
+        <div class="absolute top-2 right-2 text-amber-400 font-bold border border-amber-400 rounded px-2 transform rotate-12 text-xs font-english">
+          IT KENTEI GRADE-1
+        </div>
+        <h3 class="text-2xl font-black text-amber-400 mb-4 tracking-wider">🏆 1級 合格証書 🏆</h3>
+        <p class="text-slate-300 text-sm md:text-base leading-loose font-bold text-left px-2">
+          あなたはIT検定 1級において、極めて高度な専門知識、ネットワーク技術、並びに現代デジタル社会における優れたセキュリティマナーを完全に修得していることをここに証明します。
+        </p>
+        <p class="text-right text-amber-400 mt-4 text-xs md:text-sm font-bold">
+          IT検定実施委員会 最高責任者 より 🏅
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 w-full justify-center pt-2">
+        <button onclick="startGame()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-lg px-8 py-3 rounded-full shadow-md transform hover:scale-105 active:scale-95 transition duration-200">
+          もう一度挑戦する 🔄
+        </button>
+        <button onclick="showStartScreen()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold text-lg px-8 py-3 rounded-full shadow-md transform hover:scale-105 active:scale-95 transition duration-200">
+          最初に戻る 🏠
+        </button>
+      </div>
+    </div>
+
+    <!-- まる・ばつ 判定エフェクト用オーバーレイ -->
+    <div id="feedback-overlay" class="absolute inset-0 flex items-center justify-center bg-slate-950 bg-opacity-95 hidden z-10 transition-opacity duration-200">
+      <div id="feedback-symbol" class="text-9xl font-bold bounce-in"></div>
+    </div>
+
+  </main>
+
+  <!-- フッター -->
+  <footer class="w-full max-w-2xl text-center py-4 text-xs text-slate-600 font-bold">
+    &copy; 2026 こどもITきょうしつ
+  </footer>
+
+  <!-- JavaScriptによるクイズ制御 -->
+  <script>
+    // 40問のクイズデータ（漢字、6年生向け、1級プロレベル、絵文字付き）
+    const questions = [
+      {
+        emoji: "🔢",
+        text: "コンピュータが内部ですべてのデータを処理するために使用する、0と1だけで表される数の表現方法を何と呼ぶ？",
+        choices: ["10進数（じゅっしんすう）", "2進数（にしんすう）", "16進数（じゅうろくしんすう）", "8進数（はっしんすう）"],
+        answer: 1
+      },
+      {
+        emoji: "💾",
+        text: "コンピュータが扱うデータの最小単位を「ビット(bit)」と言いますが、8ビットをまとめて表す、ファイル容量などでよく使う単位はどれ？",
+        choices: ["1 バイト（Byte）", "1 キロバイト（KB）", "1 メガバイト（MB）", "1 ギガバイト（GB）"],
+        answer: 0
+      },
+      {
+        emoji: "🌐",
+        text: "インターネット上でコンピュータを識別するために割り当てられる、「192.168.1.1」のような数字の番号を何という？",
+        choices: ["MACアドレス", "IPアドレス", "URLアドレス", "DNSレコード"],
+        answer: 1
+      },
+      {
+        emoji: "⚙️",
+        text: "インターネット上で「google.com」のようなドメイン名と、コンピュータが理解するIPアドレスを互いに変換する仕組みは？",
+        choices: ["DHCP", "DNS", "FTP", "HTTP"],
+        answer: 1
+      },
+      {
+        emoji: "📧",
+        text: "ネットワーク上で情報をやり取りするための、共通の「共通ルールや約束事」のことを専門用語で何という？",
+        choices: ["アルゴリズム", "プロトコル", "データベース", "スクリプト"],
+        answer: 1
+      },
+      {
+        emoji: "🔒",
+        text: "インターネット通信を暗号化して安全に行うための約束事で、Webサイトの「https://」に使われているプロトコルは？",
+        choices: ["HTTP", "SSL/TLS", "FTP", "SMTP"],
+        answer: 1
+      },
+      {
+        emoji: "🔑",
+        text: "暗号化と復号（元に戻すこと）に「同じ1つの鍵」を使用する、暗号化のスピードが速い方式を何というか？",
+        choices: ["公開鍵暗号方式", "共通鍵暗号方式（秘密鍵暗号）", "電子署名方式", "ハッシュ関数方式"],
+        answer: 1
+      },
+      {
+        emoji: "🗝️",
+        text: "受信者が誰にでも配る「公開鍵」と、自分だけが秘密にする「秘密鍵」の異なる２つの鍵を使う高度な暗号化方式は？",
+        choices: ["共通鍵暗号方式", "公開鍵暗号方式", "対称鍵暗号方式", "ワンタイムパスワード方式"],
+        answer: 1
+      },
+      {
+        emoji: "🛡️",
+        text: "外部のネットワークからの不正な侵入を防ぐために、通信の通り道に設置して怪しいデータを遮断する壁のようなシステムは？",
+        choices: ["ファイアウォール", "アンチウイルス", "ルーター", "ハブ"],
+        answer: 0
+      },
+      {
+        emoji: "👁️",
+        text: "システムを安全に保つための3大要素（機密性・完全性・可用性）のうち、「情報が書き換えられたり壊されたりせず、正しい状態に保たれていること」を何という？",
+        choices: ["機密性（きみつせい）", "完全性（かんぜんせい）", "可用性（かようせい）", "信頼性（しんらいせい）"],
+        answer: 1
+      },
+      {
+        emoji: "⚙️",
+        text: "システムを安全に保つための3大要素のうち、「使いたいときにいつでもシステムやデータが利用可能である状態」を指す言葉はどれ？",
+        choices: ["可用性（かようせい）", "完全性（かんぜんせい）", "機密性（きみつせい）", "安全性（あんぜんせい）"],
+        answer: 0
+      },
+      {
+        emoji: "🧠",
+        text: "近年、ゲーム機だけでなくAI（人工知能）の画像処理やディープラーニングの計算を高速で行うために大活躍している半導体パーツは？",
+        choices: ["CPU", "GPU", "SSD", "RAM"],
+        answer: 1
+      },
+      {
+        emoji: "⚡",
+        text: "CPUなどの処理速度を示す、1秒間に発信される信号の回数を表す単位（例：3.2GHzなど）を何という？",
+        choices: ["クロック周波数", "メモリ帯域", "ビットレート", "ピクセル"],
+        answer: 0
+      },
+      {
+        emoji: "🗄️",
+        text: "大量のデータを整理し、後から検索や更新をすばやくできるようにした仕組み（データベース）を動かすための代表的な言語は？",
+        choices: ["HTML", "CSS", "SQL（エスキューエル）", "Python"],
+        answer: 2
+      },
+      {
+        emoji: "📂",
+        text: "オープンソースソフトウェア（OSS）の説明として、最も正しいものはどれ？",
+        choices: ["プログラムの設計図（ソースコード）が無料公開されており、誰でも改造や配付ができる", "お店で売られている有料のソフト", "インターネットに繋がないと動かないアプリ", "学校の授業だけで使って良いプログラミング教材"],
+        answer: 0
+      },
+      {
+        emoji: "🍪",
+        text: "Webサイトを訪問した人の情報や設定を、一時的にスマホやパソコンの中に保存し、次回からログインを簡単にする仕組みを何という？",
+        choices: ["キャッシュ", "クッキー（Cookie）", "履歴（ヒストリー）", "ブックマーク"],
+        answer: 1
+      },
+      {
+        emoji: "🗺️",
+        text: "あらかじめ登録した膨大なデータをコンピュータが自ら学習し、新しいデータに対して予測や判断を行う技術を何という？",
+        choices: ["仮想現実（VR）", "機械学習（マシンラーニング）", "ブロックチェーン", "プログラミング"],
+        answer: 1
+      },
+      {
+        emoji: "💻",
+        text: "人間の脳の神経の仕組みをモデルにして、AI（人工知能）に高度な学習を行わせる仕組みを何という？",
+        choices: ["ニューラルネットワーク", "ローカルエリアネットワーク", "ワイヤレスネットワーク", "スマートグリッド"],
+        answer: 0
+      },
+      {
+        emoji: "🎭",
+        text: "人間の声や身ぶり、特定の人の顔をAI（人工知能）に学習させ、本物そっくりの偽物の動画や画像を作る技術は？",
+        choices: ["ディープフェイク", "プロジェクションマッピング", "AR（拡張現実）", "CGイラスト"],
+        answer: 0
+      },
+      {
+        emoji: "📊",
+        text: "世界中のあらゆるセンサーやコンピュータから集まる、単に容量が大きいだけでなく、種類が豊富で更新スピードが極めて速い膨大なデータを何という？",
+        choices: ["メガデータ", "ギガファイル", "ビッグデータ", "クラウドベース"],
+        answer: 2
+      },
+      {
+        emoji: "🔎",
+        text: "データの中から特定の並び順（昇順・降順）にデータを並び替える処理手順を、アルゴリズムの用語で何という？",
+        choices: ["ソート", "サーチ", "ループ", "スタック"],
+        answer: 0
+      },
+      {
+        emoji: "🔄",
+        text: "プログラムの中で、関数（処理のまとまり）がその関数自身を呼び出すことで、複雑な計算をシンプルに解く手法は？",
+        choices: ["再帰（さいき）処理", "繰り返し処理", "分岐処理", "配列処理"],
+        answer: 0
+      },
+      {
+        emoji: "📈",
+        text: "整列された（順番に並んだ）データの中から、真ん中の値を基準にして探す範囲を半分ずつに絞り込みながら高速に目的のデータを探すアルゴリズムは？",
+        choices: ["線形探索（リニアサーチ）", "二分探索（バイナリサーチ）", "ハッシュ探索", "バブルソート"],
+        answer: 1
+      },
+      {
+        emoji: "🚨",
+        text: "ウイルスのようにプログラムを壊すのではなく、画面いっぱいに脅迫文を表示して「元に戻してほしければお金を払え」と要求する悪質なマルウェアは？",
+        choices: ["トロイの木馬", "スパイウェア", "ランサムウェア", "ワーム"],
+        answer: 2
+      },
+      {
+        emoji: "🎭",
+        text: "セキュリティを破る手口として、コンピュータの技術を使うのではなく、「人の心理的な隙（油断）」や盗み聞き、覗き見などを利用する手法は？",
+        choices: ["ソーシャルエンジニアリング", "サイバーアタック", "総当たり攻撃", "不正アクセス"],
+        answer: 0
+      },
+      {
+        emoji: "👥",
+        text: "インターネット上で特定の「アカウント」にログインする際、IDとパスワードだけでなく、スマホのSMSに送られる1回限りの番号などを追加して確認するセキュリティ対策は？",
+        choices: ["シングルサインオン", "二要素（多要素）認証", "ワンタッチアクセス", "バイオメトリクス設定"],
+        answer: 1
+      },
+      {
+        emoji: "🖨️",
+        text: "コンピュータに周辺機器をつないだ際、ユーザーが手動で設定しなくても、OSが自動的に機器を認識して使えるようにする機能は？",
+        choices: ["プラグアンドプレイ", "ドラッグアンドドロップ", "インストール", "デバイスドライバ"],
+        answer: 0
+      },
+      {
+        emoji: "💾",
+        text: "SSD（ソリッド・ステート・ドライブ）が、昔のHDD（ハード・ディスク・ドライブ）に比べて優れている最大のポイントは？",
+        choices: ["価格が半分以下であること", "磁気テープを使っていること", "データの読み書き速度が非常に高速で、衝撃に強いこと", "サイズが大きく重いこと"],
+        answer: 2
+      },
+      {
+        emoji: "🖼️",
+        text: "自分が作った作品に「非営利であれば自由に使って良い」「作者の名前を載せてね」といった、利用の条件をわかりやすいマークで表示する世界共通のライセンスは？",
+        choices: ["特許ライセンス", "クリエイティブ・コモンズ", "著作権フリーシール", "パブリックドメイン"],
+        answer: 1
+      },
+      {
+        emoji: "⚖️",
+        text: "他人が作成したイラストを、SNSの自分のアイコンに無断で設定して公開することは、著作権の何という権利の侵害（違反）になる？",
+        choices: ["複製権（ふくせいけん）", "公衆送信権（こうしゅうそうしんけん）", "翻訳権（ほんやくけん）", "譲渡権（じょうとけん）"],
+        answer: 1
+      },
+      {
+        emoji: "🔒",
+        text: "他人の自宅のWi-Fiなどのネットワークに勝手に入り込み、インターネットを無断で利用したりデータを盗み見たりする違法行為は？",
+        choices: ["ただ乗り（不正アクセス）", "ハッキングサーチ", "プロトコルハック", "パケットロス"],
+        answer: 0
+      },
+      {
+        emoji: "🤝",
+        text: "インターネット上で意見が対立した際、売り言葉に買い言葉で激しく誹謗中傷（悪口）を言い合い、話し合いが収拾のつかないほど大荒れになる現象を何という？",
+        choices: ["炎上（えんじょう）", "クラッキング", "スパム", "フィッシング"],
+        answer: 0
+      },
+      {
+        emoji: "🌐",
+        text: "世界中のネットワークを中継する重要な機器で、パケットに宛先（IPアドレス）を見て「どの道を通せば最短で届くか」を判断して送り出す装置は？",
+        choices: ["ハブ（Hub）", "ルーター（Router）", "モデム（Modem）", "ハードディスク（HDD）"],
+        answer: 1
+      },
+      {
+        emoji: "📦",
+        text: "インターネット通信で、データ（電子メールや写真など）を細切れにして、送りやすくした「情報の小さな箱（単位）」を何という？",
+        choices: ["パケット", "ビット", "フォルダ", "クッキー"],
+        answer: 0
+      },
+      {
+        emoji: "👁️",
+        text: "指紋（しもん）や顔、目の虹彩（こうさい）など、その人の「体の一部」を使ってログインなどの本人確認を行う安全な仕組みを何という？",
+        choices: ["多要素認証", "生体認証（バイオメトリクス認証）", "パターンロック", "パスコード登録"],
+        answer: 1
+      },
+      {
+        emoji: "🕸️",
+        text: "コンピュータ内部のデータのやり取りに使われる、一時的に複数の回路を接続してデータを共有するための「共通の通り道（バス）」を何という？",
+        choices: ["システムバス", "LANケーブル", "インターネット回線", "ルーター"],
+        answer: 0
+      },
+      {
+        emoji: "👾",
+        text: "プログラムに潜む「ミスや不具合（間違い）」のことを『虫』を意味する言葉で何という？",
+        choices: ["ウイルス", "バグ", "エラー", "スパイ"],
+        answer: 1
+      },
+      {
+        emoji: "🛠️",
+        text: "プログラムのバグを見つけて修正し、正しく動くように直す作業のことを何と呼ぶ？",
+        choices: ["プログラミング", "デバッグ", "ビルド", "コンパイル"],
+        answer: 1
+      },
+      {
+        emoji: "📶",
+        text: "インターネット通信で、1秒間にどれだけのデータ量を送受信できるかという「通信速度の能力（幅）」を表す言葉は？",
+        choices: ["パケットロス", "帯域幅（バンド幅／帯域）", "サーバーレス", "周波数帯"],
+        answer: 1
+      },
+      {
+        emoji: "⏱️",
+        text: "インターネットやアプリの利用時、ボタンを押してからデータが返ってくるまでの「遅れ（遅延時間）」のことをITの専門用語で何という？",
+        choices: ["タイムアウト", "レイテンシ（遅延）", "パケット詰まり", "レスポンスエラー"],
+        answer: 1
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    // Web Audio API による効果音生成（外部ファイル不要で動作）
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (!audioCtx) return;
+      
+      // ブラウザ制限対策（オーディオコンテキスト再開）
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'correct') {
+        // ピンポン（正解）
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.4);
+      } else if (type === 'incorrect') {
+        // ブブー（不正解）
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
+      } else if (type === 'pass') {
+        // ファンファーレ（合格）
+        osc.type = 'triangle';
+        const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50, 1318.51]; // 最上級に豪華なスケール
+        notes.forEach((freq, index) => {
+          const oscSeq = audioCtx.createOscillator();
+          const gainSeq = audioCtx.createGain();
+          oscSeq.type = 'triangle';
+          oscSeq.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.08);
+          gainSeq.connect(audioCtx.destination);
+          oscSeq.connect(gainSeq);
+          gainSeq.gain.setValueAtTime(0.12, audioCtx.currentTime + index * 0.08);
+          gainSeq.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + index * 0.08 + 0.3);
+          oscSeq.start(audioCtx.currentTime + index * 0.08);
+          oscSeq.stop(audioCtx.currentTime + index * 0.08 + 0.3);
+        });
+      }
+    }
+
+    // スタート画面に戻る
+    function showStartScreen() {
+      document.getElementById('start-screen').classList.remove('hidden');
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('result-screen').classList.add('hidden');
+    }
+
+    // ゲーム開始
+    function startGame() {
+      // オーディオ再開
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      currentQuestionIndex = 0;
+      score = 0;
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('result-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.remove('hidden');
+      loadQuestion();
+    }
+
+    // 問題の読み込み
+    function loadQuestion() {
+      const q = questions[currentQuestionIndex];
+      
+      // 進行情報の更新
+      document.getElementById('question-number-text').innerText = `第 ${currentQuestionIndex + 1} 問 / 40問`;
+      document.getElementById('score-text').innerText = `正解数: ${score}`;
+      
+      const progressPercent = ((currentQuestionIndex) / questions.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+      // 絵文字と問題文の更新
+      const emojiContainer = document.getElementById('question-emoji');
+      emojiContainer.innerText = q.emoji;
+      
+      // アニメーションのリセット
+      emojiContainer.classList.remove('bounce-in');
+      void emojiContainer.offsetWidth; // リフロー
+      emojiContainer.classList.add('bounce-in');
+
+      document.getElementById('question-text').innerText = q.text;
+
+      // 選択肢ボタンの作成
+      const choicesContainer = document.getElementById('choices-container');
+      choicesContainer.innerHTML = '';
+
+      // プロフェッショナルなカラーパレット
+      const colors = [
+        'from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 border-amber-800 text-slate-950',
+        'from-blue-700 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 border-indigo-900 text-white',
+        'from-slate-800 to-slate-750 hover:from-slate-700 hover:to-slate-650 border-slate-950 text-slate-100',
+        'from-purple-700 to-fuchsia-700 hover:from-purple-600 hover:to-fuchsia-600 border-fuchsia-900 text-white'
+      ];
+
+      q.choices.forEach((choice, index) => {
+        const btn = document.createElement('button');
+        btn.className = `w-full bg-gradient-to-r ${colors[index % colors.length]} font-bold text-sm md:text-base py-3.5 px-5 rounded-2xl shadow-lg border-b-4 transform active:scale-95 transition-all text-left flex items-center space-x-3`;
+        
+        // 選択肢の番号表示
+        const badge = document.createElement('span');
+        badge.className = "bg-slate-950 text-amber-400 rounded-full h-6 w-6 flex items-center justify-center font-black text-xs shrink-0 border border-amber-500 font-english";
+        badge.innerText = index + 1;
+        
+        const label = document.createElement('span');
+        label.innerText = choice;
+
+        btn.appendChild(badge);
+        btn.appendChild(label);
+        
+        btn.onclick = () => selectChoice(index);
+        choicesContainer.appendChild(btn);
+      });
+    }
+
+    // 選択肢が選ばれたときの判定
+    function selectChoice(selectedIndex) {
+      const q = questions[currentQuestionIndex];
+      const isCorrect = (selectedIndex === q.answer);
+
+      // フィードバック表示の準備
+      const overlay = document.getElementById('feedback-overlay');
+      const symbol = document.getElementById('feedback-symbol');
+
+      if (isCorrect) {
+        score++;
+        symbol.innerText = "⭕";
+        symbol.className = "text-9xl text-amber-400 bounce-in";
+        playSound('correct');
+      } else {
+        symbol.innerText = "❌";
+        symbol.className = "text-9xl text-rose-500 bounce-in";
+        playSound('incorrect');
+      }
+
+      // オーバーレイを表示して1秒待つ
+      overlay.classList.remove('hidden');
+      overlay.style.opacity = '1';
+
+      setTimeout(() => {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+          nextQuestion();
+        }, 200);
+      }, 1000);
+    }
+
+    // 次の問題へ、または終了判定
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    // 結果表示
+    function showResults() {
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('result-screen').classList.remove('hidden');
+
+      const resultEmoji = document.getElementById('result-emoji');
+      const resultTitle = document.getElementById('result-title');
+      const scoreDetails = document.getElementById('result-score-details');
+      const certificate = document.getElementById('certificate');
+
+      scoreDetails.innerHTML = `40問中 <strong class="text-3xl text-amber-400">${score}問</strong> 正解！`;
+
+      // 32問（8割）以上で合格
+      if (score >= 32) {
+        resultEmoji.innerText = "👑";
+        resultTitle.innerText = "🎉 1級合格！最高位獲得！ 🎉";
+        resultTitle.className = "text-2xl md:text-3xl font-extrabold text-amber-400 wiggle";
+        certificate.classList.remove('hidden');
+        playSound('pass');
+      } else {
+        resultEmoji.innerText = "✊";
+        resultTitle.innerText = "おしかった！あと一歩でプロフェッショナル！";
+        resultTitle.className = "text-xl md:text-2xl font-bold text-slate-300";
+        certificate.classList.add('hidden'); // 不合格の場合は賞状を表示しない
+      }
+    }
+  </script>
+</body>
+</html>
