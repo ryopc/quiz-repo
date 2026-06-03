@@ -522,28 +522,52 @@
             background-size: 1rem;
             padding-right: 3rem;
         }
-        .form-submit-btn {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            background: var(--gradient-accent);
-            color: var(--white);
-            border: none;
-            padding: 1.25rem 2.5rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 10px 25px rgba(0, 82, 204, 0.15);
-            margin-top: 2rem;
-        }
-        .form-submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 82, 204, 0.25);
-        }
+.form-submit-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    
+    /* 🔴 変数が壊れていても動くよう、手前にフォールバック（予備の色）を配置 */
+    background: #0052cc; 
+    background: var(--gradient-accent, linear-gradient(135deg, #0070f3, #0052cc));
+    
+    /* 🔴 文字色も同様に、変数が壊れていたら「白」にする */
+    color: #ffffff;
+    color: var(--white, #ffffff);
+    
+    border: none;
+    padding: 1.25rem 2.5rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition, all 0.3s ease);
+    box-shadow: 0 10px 25px rgba(0, 82, 204, 0.15);
+    margin-top: 2rem;
+    
+    /* 🔴 親要素のサイズ制限でボタンが消えるのを防ぐお守り */
+    box-sizing: border-box; 
+}
+
+.form-submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 82, 204, 0.25);
+    
+    /* 🔴 ホバー時に少し明るく（または暗く）してリアクションを出す */
+    filter: brightness(1.1); 
+}
+
+/* 💡 前のステップで提案した「連打防止JavaScript」用のスタイルも追加しておきます */
+.form-submit-btn:disabled {
+    background: #cbd5e1 !important; /* グレー */
+    color: #94a3b8 !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
     </style>
 </head>
 <body>
@@ -695,8 +719,7 @@
             <p data-t="content_cat5_desc">dnsやプロトコルなどの専門的な知識</p>
         </section>
 
-                        -- [お問い合わせフォーム] -->
-        <section class="card" id="contact">
+    <section class="card" id="contact">
             <h2 data-t="contact_title">Contact Us</h2>
             <p data-t="contact_body" style="color: var(--text-light); margin-bottom: 2rem;">プロジェクトに関するご質問やご相談は、以下のフォームよりお気軽にお問い合わせください。</p>
             
