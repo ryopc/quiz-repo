@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小学生向けIT理解度確認検定</title>
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css" rel="stylesheet">
+  <style>
+    /* 日本語の等幅フォントやシステムフォントを指定 */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+    }
+    /* スクロールバーのカスタマイズ */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+  <script>
+    // =========================================================================
+    // 【ここをいじるだけで試験内容を変更できます！】
+    // =========================================================================
+    const EXAM_DATA = {
+      title: "小学生向けIT理解度確認検定",
+      description: "本試験は、小学生の、ITの基本知識、セキュリティ、最新テクノロジーの理解度を測定するためのオンライン検定です。開始ボタンを押すとタイマーが始動します。慎重に解答してください。",
+      durationMinutes: 40, // 制限時間（分）
+      passingScoreRate: 70, // 合格基準（%）
+questions: [
+        {
+          id: 1,
+          type: "single",
+          points: 2.5,
+          category: "ネットワークの仕組み",
+          question: "オンラインゲームで自分がホスト（サーバー）になって友達を接続させたりするときに、ルーターの設定を変更して外部からの通信の通り道を空ける作業を何と呼びますか？",
+          options: ["DNSサーバー設定", "ポート開放（ポートマッピング）", "IPアドレスの固定化", "MACアドレスフィルタリング"],
+          correctAnswer: 1,
+          explanation: "ルーターは外部からの不審な通信を通さない壁（ファイアウォール）の役割をしていますが、特定の通信の通り道を空ける設定を「ポート開放」と呼びます。"
+        },
+        {
+          id: 2,
+          type: "single",
+          points: 2.5,
+          category: "情報セキュリティ",
+          question: "ウェブサイトのURLが「http://」ではなく「https://」で始まっている場合、そのサイトで行われている重要な対策はどれですか？",
+          options: ["サイト内のすべての画像を高画質にしている。", "パソコンがウイルスに感染しているかチェックしている。", "通信データを暗号化して、途中で盗み見られるのを防いでいる。", "インターネットの接続スピードを2倍に高速化している。"],
+          correctAnswer: 2,
+          explanation: "「https://」はパソコンとサーバーの間の通信を「暗号化」して、パスワードや個人情報を盗まれないように保護していることを示します。"
+        },
+        {
+          id: 3,
+          type: "multiple",
+          points: 2.5,
+          category: "情報モラルと著作権",
+          question: "インターネット上にある画像や文章には「著作権（ちょさくけん）」があります。法律やルールに違反しない、正しい使い方を【すべて】選んでください。（複数選択可）",
+          options: ["自分で買った音楽CDの曲を、友達のスマホにコピーしてあげる。", "学校の授業の発表スライドで、どこのホームページから引用したかを明記して写真を使う。", "自分で描いたイラストを、SNSに投稿して友達に見せる。", "有料で販売されているゲームの画面を録画して、自分で作った動画としてネットで売る。"],
+          correctAnswer: [1, 2],
+          explanation: "学校の授業での利用（引用元の明記が必要）や、自分で作った作品を公開することは認められています。他人の作品を勝手にコピーしたり販売したりするのは違法です。"
+        },
+        {
+          id: 4,
+          type: "single",
+          points: 2.5,
+          category: "インターネットの基礎",
+          question: "「yahoo.co.jp」や「google.com」のように、インターネット上のウェブサイトの場所（住所）を人間が分かりやすい文字列で表したものを何と呼びますか？",
+          options: ["ドメイン名", "IPアドレス", "サーバー名", "プロバイダ"],
+          correctAnswer: 0,
+          explanation: "インターネット上の住所にあたる文字列を「ドメイン名」と呼びます。コンピュータが処理する数字の住所（IPアドレス）を翻訳したものです。"
+        },
+        {
+          id: 5,
+          type: "multiple",
+          points: 2.5,
+          category: "コンピュータの仕組み",
+          question: "パソコンの性能を決める主要なパーツ（部品）の中で、データの長期保存を行う「ストレージ（記憶装置）」に分類されるものを【すべて】選んでください。（複数選択可）",
+          options: ["CPU（中央演算処理装置）", "SSD（ソリッドステートドライブ）", "メモリ（RAM）", "HDD（ハードディスクドライブ）"],
+          correctAnswer: [1, 3],
+          explanation: "データを保存する装置（ストレージ）には、高速な「SSD」や、大容量な「HDD」があります。CPUは頭脳、メモリは作業机の広さです。"
+        },
+        {
+          id: 6,
+          type: "text",
+          points: 2.5,
+          category: "最新テクノロジー",
+          question: "人間のように自然な文章を書いたり、プログラミングコードを作ったりできる「ChatGPT」などのAI技術のことを、日本語で「○○AI」と呼びます。○○に入る漢字2文字を解答してください。",
+          placeholder: "例：計算",
+          correctAnswer: "生成",
+          alternativeAnswers: ["生成系", "せいせい"],
+          explanation: "文章や画像、音楽などを新しく作り出すAIのことを「生成AI（生成系AI）」と呼びます。"
+        },
+        {
+          id: 7,
+          type: "text",
+          points: 2.5,
+          category: "プログラミング",
+          question: "プログラミングで、同じ処理を何度も自動で繰り返したいときに使う、英語で「ループ（Loop）」と呼ばれる処理の仕組みを、日本語の漢字2文字で何と呼びますか？",
+          placeholder: "例：命令",
+          correctAnswer: "反復",
+          alternativeAnswers: ["はんぷく"],
+          explanation: "条件を満たすまで同じ命令を繰り返す処理を「反復（はんぷく）」または「繰り返し」と呼びます。"
+        },
+        {
+          id: 8,
+          type: "single",
+          points: 2.5,
+          category: "パソコンのつかいかた",
+          question: "間違えてファイルや文章を消してしまったとき、一つ前の状態に「元に戻す」ための一般的なショートカットキー（Windows）はどれですか？",
+          options: ["Ctrl + C", "Ctrl + V", "Ctrl + Z", "Ctrl + X"],
+          correctAnswer: 2,
+          explanation: "「Ctrl + Z」は操作を1つ取り消して元に戻すショートカットキーです。Cはコピー、Vは貼り付け、Xは切り取りです。"
+        },
+        {
+          id: 9,
+          type: "single",
+          points: 2.5,
+          category: "情報セキュリティ",
+          question: "コンピュータウイルスなどがメールの添付ファイルを通じて感染するのを防ぐために、パソコンに導入しておくべき最も重要なソフトウェアはどれですか？",
+          options: ["表計算ソフトウェア", "ウイルス対策（セキュリティ）ソフトウェア", "ウェブブラウザ", "動画編集ソフトウェア"],
+          correctAnswer: 1,
+          explanation: "ウイルス対策ソフトを入れ、常に最新の状態にアップデートしておくことが、ネットを安全に使うための基本です。"
+        },
+        {
+          id: 10,
+          type: "single",
+          points: 2.5,
+          category: "ネットワークの仕組み",
+          question: "インターネットの通信において、世界中のコンピュータが共通して守っている「通信の約束事・ルール」のことを何と呼びますか？",
+          options: ["プロトコル", "アルゴリズム", "アプリケーション", "オペレーティングシステム"],
+          correctAnswer: 0,
+          explanation: "ネットワーク上でデータを正しくやり取りするための共通の約束事を「プロトコル（通信プロトコル）」と言います。インターネットではTCP/IPなどが使われます。"
+        },
+        {
+          id: 11,
+          type: "single",
+          points: 2.5,
+          category: "インターネットの基礎",
+          question: "家の中のパソコンやスマホを無線（ワイヤレス）でインターネットにつなぐための技術で、最も一般的に使われているものはどれですか？",
+          options: ["Bluetooth", "Wi-Fi（ワイファイ）", "4G / 5G", "赤外線通信"],
+          correctAnswer: 1,
+          explanation: "家の中や学校などの狭い範囲で、高速な無線LANの通信を行う技術を「Wi-Fi」と呼びます。"
+        },
+        {
+          id: 12,
+          type: "single",
+          points: 2.5,
+          category: "コンピュータの仕組み",
+          question: "パソコンの電源を切ると、その中にあった作業中のデータがすべて消えてしまう（揮発性を持つ）パーツはどれですか？",
+          options: ["ハードディスク（HDD）", "SSD", "メモリ（RAM）", "ROM"],
+          correctAnswer: 2,
+          explanation: "メモリ（RAM）は電源が切れるとデータが消える性質があります。そのため、作業中のデータは「保存（保存先はSSDやHDD）」する必要があります。"
+        },
+        {
+          id: 13,
+          type: "single",
+          points: 2.5,
+          category: "情報セキュリティ",
+          question: "他人のIDやパスワードを勝手に使ってシステムにログインしたり、ネットワークに侵入したりする犯罪行為を何と呼びますか？",
+          options: ["不正アクセス", "バグ", "フィッシング", "アップデート"],
+          correctAnswer: 0,
+          explanation: "アクセスする権利を持たない人が、勝手に他人のアカウントやコンピュータに侵入することを「不正アクセス」と言います。"
+        },
+        {
+          id: 14,
+          type: "multiple",
+          points: 2.5,
+          category: "情報モラル",
+          question: "SNS（LINEやXなど）に投稿するとき、トラブルを防ぐために【やってはいけないこと】をすべて選んでください。（複数選択可）",
+          options: ["友達が変な顔で写っている写真を、内緒で面白半分に投稿する。", "明日から家族で旅行に行って、家が留守（るす）になる予定を詳しく書く。", "自分で作った料理の写真を投稿する。", "ネットで見つけた有名人の住所や電話番号を拡散する。"],
+          correctAnswer: [0, 1, 3],
+          explanation: "他人のプライバシーや個人情報を勝手に載せること、自分の家が留守になる情報を世界中に公開することは非常に危険です。"
+        },
+        {
+          id: 15,
+          type: "single",
+          points: 2.5,
+          category: "プログラミング",
+          question: "プログラミングで、条件によって処理を分ける仕組み（例：「もし点数が70点以上なら合格、そうでなければ不合格」）を何と呼びますか？",
+          options: ["順次（じゅんじ）", "反復（はんぷく）", "条件分岐（じょうけんぶんき）", "変数（へんすう）"],
+          correctAnswer: 2,
+          explanation: "「もし〜なら」という条件によってその後の命令を枝分かれさせる仕組みを「条件分岐」と呼びます。"
+        },
+        {
+          id: 16,
+          type: "text",
+          points: 2.5,
+          category: "コンピュータの知識",
+          question: "コンピュータが理解できるデータは、すべて「0」と「1」の2つの数字だけで表されています。この表し方を漢字3文字で「○○法」と呼びます。○○に入る言葉を答えてください。",
+          placeholder: "例：十進",
+          correctAnswer: "二進",
+          alternativeAnswers: ["２進", "にしん"],
+          explanation: "0と1だけで数を数える方法を「二進法（にしんほう）」と言います。デジタルコンピュータの基本です。"
+        },
+        {
+          id: 17,
+          type: "single",
+          points: 2.5,
+          category: "ネットワークの仕組み",
+          question: "インターネット上の「ドメイン名」と「IPアドレス」を互いに変換し、人間がURLを入力したときに正しいサーバーへ案内してくれるシステムの仕組みを何と呼びますか？",
+          options: ["DHCP", "DNS", "FTP", "HTTP"],
+          correctAnswer: 1,
+          explanation: "DNS（Domain Name System）は、人間向けの「ドメイン名」を、コンピュータ向けの「IPアドレス」に変換する電話帳のような役割をしています。"
+        },
+        {
+          id: 18,
+          type: "single",
+          points: 2.5,
+          category: "コンピュータの仕組み",
+          question: "WindowsやmacOS、iOS、Androidのように、パソコンやスマホを動かすための最も土台となる基本ソフトウェアの総称を何と呼びますか？",
+          options: ["アプリケーション", "ブラウザ", "OS（オペレーティングシステム）", "ハードウェア"],
+          correctAnswer: 2,
+          explanation: "コンピュータ全体の管理や、アプリを動かすための土台となるソフトを「OS（オーエス）」と呼びます。"
+        },
+        {
+          id: 19,
+          type: "single",
+          points: 2.5,
+          category: "情報セキュリティ",
+          question: "銀行や有名な会社になりすました偽のメールを送り、偽のホームページに誘導してパスワードやクレジットカード番号を盗み出す詐欺（さぎ）を何と呼びますか？",
+          options: ["ランサムウェア", "フィッシング詐欺", "ワンクリック詐欺", "マルウェア"],
+          correctAnswer: 1,
+          explanation: "実在する企業を装って重要な個人情報を「釣る」ことから、フィッシング（Phishing）詐欺と呼ばれます。"
+        },
+        {
+          id: 20,
+          type: "single",
+          points: 2.5,
+          category: "インターネットの基礎",
+          question: "ウェブサイトを閲覧（えつらん）するために使うソフトウェア（Google Chrome、Microsoft Edge、Safariなど）の種類を何と呼びますか？",
+          options: ["検索エンジン", "ウェブブラウザ", "SNS", "クラウド"],
+          correctAnswer: 1,
+          explanation: "ホームページを見るためのソフトのことを「ウェブブラウザ」、または単に「ブラウザ」と言います。"
+        },
+        {
+          id: 21,
+          type: "single",
+          points: 2.5,
+          category: "情報モラル",
+          question: "インターネット上で知り合った人に「ゲームのレアアイテムをあげるから、家を教えて」と言われました。どうするのが正しいですか？",
+          options: ["アイテムが欲しいので、すぐに住所を教える。", "嘘（うそ）の住所を教えてアイテムだけもらう。", "絶対に教えないで、すぐにおうちの人や先生に相談する。", "友達を誘って一緒にその人の家に行く。"],
+          correctAnswer: 2,
+          explanation: "ネットの向こうの人が本当に良い人とは限りません。トラブルに巻き込まれないために、個人情報は教えず大人に相談しましょう。"
+        },
+        {
+          id: 22,
+          type: "multiple",
+          points: 2.5,
+          category: "コンピュータの仕組み",
+          question: "キーボードやマウスのように、人間がコンピュータに命令やデータを「入力」するための装置（入力装置）を【すべて】選んでください。（複数選択可）",
+          options: ["マウス", "ディスプレイ（画面）", "スキャナー", "プリンター"],
+          correctAnswer: [0, 2],
+          explanation: "マウスやスキャナー、キーボードは「入力装置」です。ディスプレイやプリンターは、結果を表示する「出力装置」です。"
+        },
+        {
+          id: 23,
+          type: "text",
+          points: 2.5,
+          category: "プログラミング",
+          question: "プログラミングにおいて、データ（数値や文字列など）を一時的に入れておくための「箱」のような役割をするものを、漢字2文字で何と呼びますか？",
+          placeholder: "例：計算",
+          correctAnswer: "変数",
+          alternativeAnswers: ["へんすう"],
+          explanation: "値を入れておき、後から変えたり計算に使ったりできる箱を「変数（へんすう）」と呼びます。"
+        },
+        {
+          id: 24,
+          type: "single",
+          points: 2.5,
+          category: "最新テクノロジー",
+          question: "あらゆるモノ（家電、車、時計など）をインターネットにつなぎ、遠隔操作したりデータを集めたりする仕組みをアルゴリズムの略称で何と呼びますか？",
+          options: ["AI", "IoT（アイオーティー）", "SNS", "VR"],
+          correctAnswer: 1,
+          explanation: "Internet of Thingsの略で「IoT（モノのインターネット）」と言います。スマホからエアコンを操作する技術などがこれに当たります。"
+        },
+        {
+          id: 25,
+          type: "single",
+          points: 2.5,
+          category: "情報セキュリティ",
+          question: "安全なパスワードを作るためのルールとして、最も適切なものはどれですか？",
+          options: ["自分の名前と誕生日にする。", "アルファベットの「aaaaaa」にする。", "英語の大文字・小文字、数字、記号を混ぜて長くする。", "一度決めたら一生変えないようにする。"],
+          correctAnswer: 2,
+          explanation: "他人に推測されにくく、コンピュータによる自動攻撃でも破られにくい「複雑で長いパスワード」が安全です。"
+        },
+        {
+          id: 26,
+          type: "single",
+          points: 2.5,
+          category: "インターネットの基礎",
+          question: "電子メールを送るとき、メインの送信先（To）以外の人にも「参考までに同じ内容を共有して送りたい」ときに使う機能（カーボンコピーの略）はどれですか？",
+          options: ["Bcc", "Cc", "Sub", "Re"],
+          correctAnswer: 1,
+          explanation: "Cc（Carbon Copy）に入力されたアドレスは、受信者全員に公開されます。全員に隠して送りたいときはBccを使います。"
+        },
+        {
+          id: 27,
+          type: "single",
+          points: 2.5,
+          category: "ネットワークの仕組み",
+          question: "社内や家庭内のプライベートなネットワークと、外の世界（インターネット）との境目に設置し、おかしな通信が中に入ってこないように監視・遮断（しゃだん）する壁のような仕組みを何と言いますか？",
+          options: ["プロバイダ", "ファイアウォール", "ルーター", "ハブ"],
+          correctAnswer: 1,
+          explanation: "火災を防ぐ防火壁が語源で、不正なアクセスを防ぐセキュリティの壁を「ファイアウォール」と呼びます。"
+        },
+        {
+          id: 28,
+          type: "single",
+          points: 2.5,
+          category: "コンピュータの仕組み",
+          question: "コンピュータのデータ量の単位で、最も小さい単位は「ビット（bit）」ですが、ビットが8個集まった、1文字を表すときの基準となる単位は何ですか？",
+          options: ["バイト（Byte）", "キロバイト（KB）", "メガバイト（MB）", "ギガバイト（GB）"],
+          correctAnswer: 0,
+          explanation: "8ビット（bit） ＝ 1バイト（Byte）になります。データの大きさを表す基本的な単位です。"
+        },
+        {
+          id: 29,
+          type: "multiple",
+          points: 2.5,
+          category: "情報モラル",
+          question: "インターネットで調べものをして、その情報を信じるかどうか決めるときに【確認すべきこと】をすべて選んでください。（複数選択可）",
+          options: ["いつ書かれた情報か（情報が古くないか）。", "だれが書いた情報か（専門家や公式な組織が書いたものか）。", "他のいくつかのホームページにも同じことが書かれているか。", "デザインがカラフルでかっこいいかどうか。"],
+          correctAnswer: [0, 1, 2],
+          explanation: "ネットの情報には嘘や古いものもあるため、「だれが」「いつ」発信したか、複数の情報源で確かめる（クロスチェック）ことが大切です。"
+        },
+        {
+          id: 30,
+          type: "single",
+          points: 2.5,
+          category: "プログラミング",
+          question: "プログラミング言語の中で、ホームページの骨組み（見た目や文章の構造）を作るために使われる、このテストシステムでも使われている言語は何ですか？",
+          options: ["Python", "JavaScript", "HTML", "C++"],
+          correctAnswer: 2,
+          explanation: "HTML（HyperText Markup Language）は、ウェブページを作るための基本的な言語です。"
+        },
+        {
+          id: 31,
+          type: "single",
+          points: 2.5,
+          category: "情報セキュリティ",
+          question: "パソコン内のデータを勝手に暗号化して使えなくし、元に戻すことと引き換えに「お金（身代金）」を要求してくる悪質なウイルスの種類を何と呼びますか？",
+          options: ["スパイウェア", "トロイの木馬", "ランサムウェア", "ワーム"],
+          correctAnswer: 2,
+          explanation: "身代金（Ransom）とソフトウェアを組み合わせて「ランサムウェア」と呼びます。非常に危険なウイルスです。"
+        },
+        {
+          id: 32,
+          type: "single",
+          points: 2.5,
+          category: "最新テクノロジー",
+          question: "インターネット上の箱（サーバー）の中にデータやアプリを置いておき、自分のパソコンには保存せずに、必要なときだけネット経由で利用する仕組みを何と言いますか？",
+          options: ["ハードウェア", "クラウドサービス", "ローカルストレージ", "アナログ"],
+          correctAnswer: 1,
+          explanation: "データを「雲（Cloud）」の中に置いておくようなイメージから、クラウドサービス（または単にクラウド）と呼ばれます。"
+        },
+        {
+          id: 33,
+          type: "text",
+          points: 2.5,
+          category: "コンピュータの基礎",
+          question: "ソフトウェア（プログラム）に隠れている、動作がおかしくなる「原因」や「間違い・欠陥（けっかん）」のことを、英語で「虫」を意味する言葉から何と呼びますか？カタカナ2文字で答えてください。",
+          placeholder: "例：ミス",
+          correctAnswer: "バグ",
+          alternativeAnswers: ["ばぐ"],
+          explanation: "プログラムの不具合やミスのことを「バグ（Bug）」と言います。これを見つけて直すことをデバッグと呼びます。"
+        },
+        {
+          id: 34,
+          type: "single",
+          points: 2.5,
+          category: "ネットワークの仕組み",
+          question: "ネットワークにつながっているスマホやパソコンに対して、「192.168.1.5」のような識別用の番号（IPアドレス）を自動的に割り当ててくれるルーターの機能を何と呼びますか？",
+          options: ["DHCP", "DNS", "NAT", "MAC"],
+          correctAnswer: 0,
+          explanation: "DHCP（Dynamic Host Configuration Protocol）という仕組みによって、私たちは設定を気にせずWi-Fiにつなぐだけでネットが使えます。"
+        },
+        {
+          id: 35,
+          type: "single",
+          points: 2.5,
+          category: "情報セキュリティ",
+          question: "二要素認証（2段階認証）の仕組みとして、最も一般的な組み合わせはどれですか？",
+          options: ["同じパスワードを2回入力する。", "パスワードを入力したあと、登録したスマホに届く1回限りの数字（暗証番号）を入力する。", "パスワードを入力したあと、自分の名前を入力する。", "秘密の質問に2個答える。"],
+          correctAnswer: 1,
+          explanation: "パスワード（知っている情報）だけでなく、本人のスマホ（持っている端末）を使うことで、万が一パスワードが漏れても不正ログインを防げます。"
+        },
+        {
+          id: 36,
+          type: "multiple",
+          points: 2.5,
+          category: "インターネットの基礎",
+          question: "検索エンジン（GoogleやYahoo!など）で、より調べたい情報を絞り込んで検索するための正しいテクニックを【すべて】選んでください。（複数選択可）",
+          options: ["「日本の城 江戸城」のように、キーワードの間にスペース（空白）を空けて並べる。", "「\"富士山\"」のようにキーワードをダブルクォーテーションで囲んで完全一致で探す。", "調べたい文章をそのまま長い作文にして検索欄に入力する。", "キーワードの前にマイナスを付けて「ラーメン -辛い」と入れて特定の言葉を除外する。"],
+          correctAnswer: [0, 1, 3],
+          explanation: "スペースを空けるAND検索、囲む完全一致検索、マイナスをつける除外検索（NOT検索）は、ネット検索の基本かつ強力な技です。"
+        },
+        {
+          id: 37,
+          type: "single",
+          points: 2.5,
+          category: "コンピュータの仕組み",
+          question: "コンピュータを構成する「ハードウェア（目に見える機械）」の中で、演算（計算）や制御を行う、人間でいう「脳みそ」に最も近い中心パーツはどれですか？",
+          options: ["メインメモリ", "GPU", "CPU", "マザーボード"],
+          correctAnswer: 2,
+          explanation: "CPU（Central Processing Unit）は中央演算処理装置と呼ばれ、コンピュータのあらゆる計算をこなす中心パーツです。"
+        },
+        {
+          id: 38,
+          type: "single",
+          points: 2.5,
+          category: "情報モラル",
+          question: "ネット上で知り合ったゲームの友達から「これ面白いからクリックしてみて」と、見慣れないURLが送られてきました。どうするのが一番安全ですか？",
+          options: ["面白そうなので、すぐにクリックして開く。", "怪しいのでクリックせず、開かない。", "友達に「これ安全？」と聞いて、安全と言われたら開く。", "スマホではなくパソコンなら安全なのでパソコンで開く。"],
+          correctAnswer: 1,
+          explanation: "仲の良いネットの友達であっても、その友達のアカウントが乗っ取られていたり、友達自身がウイルスだと知らずに送っている可能性があります。"
+        },
+        {
+          id: 39,
+          type: "single",
+          points: 2.5,
+          category: "プログラミング",
+          question: "コンピュータにやってほしい処理の進め方を、順番に迷いなく実行できるように細かく決めた「計算や処理の手順（設計図）」のことを何と呼びますか？",
+          options: ["アルゴリズム", "アプリケーション", "データベース", "ハードウェア"],
+          correctAnswer: 0,
+          explanation: "問題を解決するための手順や計算方法を「アルゴリズム」と呼びます。これをプログラミング言語で書いたものがプログラムです。"
+        },
+        {
+          id: 40,
+          type: "text",
+          points: 2.5,
+          category: "最新テクノロジー",
+          question: "コンピュータに大量のデータを取り込ませてパターンを学習させ、人間のような判断力を身につけさせる人工知能の技術を「機械○○」と呼びます。○○に入る漢字2文字を答えてください。",
+          placeholder: "例：計算",
+          correctAnswer: "学習",
+          alternativeAnswers: ["がくしゅう"],
+          explanation: "AIの代表的な技術の1つで、データからコンピュータ自らがルールを学ぶ仕組みを「機械学習（マシンラーニング）」と言います。"
+        }
+      ]
+    };
+    // =========================================================================
+  </script>
+
+  <!-- 1. スタート画面 -->
+  <div id="start-screen" class="flex-grow flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-white rounded-xl shadow-lg border border-slate-200 p-8">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="p-3 bg-blue-100 text-blue-600 rounded-lg">
+          <i class="lucide-file-text text-3xl"></i>
+        </div>
+        <div>
+          <h1 id="start-title" class="text-2xl font-bold text-slate-800">試験タイトル</h1>
+          <p class="text-slate-500 text-sm mt-1">本格CBTオンライン試験</p>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-5 rounded-lg border border-slate-100 mb-6 text-sm leading-relaxed text-slate-600">
+        <h2 class="font-bold text-slate-700 mb-2 flex items-center gap-1">
+          <i class="lucide-info text-blue-500"></i> 受験上の注意
+        </h2>
+        <p id="start-description" class="mb-4">試験の説明がここに入ります。</p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-slate-200 pt-4 mt-2">
+          <div class="flex flex-col">
+            <span class="text-xs text-slate-400">制限時間</span>
+            <span id="start-time" class="text-base font-semibold text-slate-700">-- 分</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xs text-slate-400">問題数</span>
+            <span id="start-count" class="text-base font-semibold text-slate-700">-- 問</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xs text-slate-400">満点・合格ライン</span>
+            <span id="start-score-info" class="text-base font-semibold text-slate-700">-- 点（--%以上）</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 受験者登録 -->
+      <div class="mb-6">
+        <label for="student-name" class="block text-sm font-semibold text-slate-700 mb-2">
+          受験者名 <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+            <i class="lucide-user"></i>
+          </span>
+          <input type="text" id="student-name" placeholder="氏名または受験番号を入力してください"
+            class="w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+        </div>
+        <p id="name-error" class="text-red-500 text-xs mt-2 hidden flex items-center gap-1">
+          <i class="lucide-alert-triangle text-xs"></i> 名前を入力してください。
+        </p>
+      </div>
+
+      <button id="btn-start" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition-all flex items-center justify-center gap-2 text-base">
+        試験を開始する
+        <i class="lucide-play text-lg"></i>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- 2. 本試験画面 (試験開始後に表示) -->
+  <div id="exam-screen" class="hidden flex-grow flex flex-col h-screen overflow-hidden">
+    <!-- 試験ヘッダー -->
+    <header class="bg-slate-900 text-white px-6 py-4 flex flex-wrap justify-between items-center gap-4 border-b border-slate-700 shrink-0">
+      <div class="flex items-center gap-3">
+        <span class="bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded">CBT MODE</span>
+        <h1 id="exam-header-title" class="font-bold text-lg max-w-md truncate">試験タイトル</h1>
+      </div>
+      
+      <!-- タイマー & アクション -->
+      <div class="flex items-center gap-4">
+        <!-- ユーザー情報 -->
+        <div class="hidden md:flex flex-col items-end text-sm text-slate-300">
+          <span class="text-xs text-slate-400">受験者</span>
+          <span id="exam-student-name" class="font-medium">ゲスト</span>
+        </div>
+        
+        <!-- カウントダウンタイマー -->
+        <div id="timer-box" class="flex items-center gap-2 bg-slate-800 border border-slate-700 px-4 py-2 rounded-lg font-mono">
+          <i class="lucide-timer text-blue-400" id="timer-icon"></i>
+          <span class="text-xs text-slate-400">残り時間:</span>
+          <span id="timer-display" class="font-bold text-xl text-white">00:00:00</span>
+        </div>
+
+        <button id="btn-open-submit-modal" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-5 rounded-lg text-sm shadow transition-all flex items-center gap-2">
+          <i class="lucide-check-square"></i>
+          解答終了
+        </button>
+      </div>
+    </header>
+
+    <!-- 試験メインエリア（左右分割レイアウト） -->
+    <div class="flex-grow flex overflow-hidden">
+      
+      <!-- 左：問題表示エリア -->
+      <main class="flex-grow overflow-y-auto p-6 md:p-8 flex justify-center">
+        <div class="max-w-3xl w-full flex flex-col gap-6">
+          
+          <!-- 問題カード -->
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 relative">
+            <!-- フラグと問題情報ヘッダー -->
+            <div class="flex justify-between items-start gap-4 mb-6 border-b border-slate-100 pb-4">
+              <div>
+                <span class="text-xs text-slate-400 font-mono tracking-wider">QUESTION <span id="current-q-num">1</span> OF <span id="total-q-num">1</span></span>
+                <div class="flex items-center gap-2 mt-1">
+                  <span id="q-category" class="bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-0.5 rounded">カテゴリ</span>
+                  <span id="q-points" class="text-xs text-slate-500 font-medium">[配点: 10点]</span>
+                  <span id="q-type-badge" class="bg-blue-50 text-blue-600 border border-blue-100 text-xs px-2 py-0.5 rounded font-medium">単一選択</span>
+                </div>
+              </div>
+              
+              <!-- 見直しフラグボタン -->
+              <button id="btn-flag" class="flex items-center gap-1.5 text-slate-400 hover:text-amber-500 transition-colors py-1.5 px-3 rounded-lg border border-slate-200 hover:border-amber-300 text-sm">
+                <i class="lucide-flag" id="flag-icon"></i>
+                <span id="flag-text">見直しフラグ</span>
+              </button>
+            </div>
+
+            <!-- 問題文 -->
+            <div class="mb-8">
+              <p id="q-text" class="text-slate-800 text-base md:text-lg font-medium leading-relaxed whitespace-pre-line">
+                ここに問題文が入ります。
+              </p>
+            </div>
+
+            <!-- 解答コントロール（動的に切り替え） -->
+            <div id="answers-container" class="space-y-3">
+              <!-- JSで選択肢またはテキストフォームを生成 -->
+            </div>
+          </div>
+
+          <!-- ナビゲーションボタン -->
+          <div class="flex justify-between items-center mt-2 shrink-0">
+            <button id="btn-prev" class="flex items-center gap-2 px-5 py-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-medium transition-all text-sm disabled:opacity-50 disabled:pointer-events-none">
+              <i class="lucide-arrow-left text-sm"></i>
+              前の問題
+            </button>
+            <span class="text-sm text-slate-400 font-medium">
+              進捗: <span id="progress-percent">0</span>%
+            </span>
+            <button id="btn-next" class="flex items-center gap-2 px-5 py-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium transition-all text-sm">
+              次の問題
+              <i class="lucide-arrow-right text-sm"></i>
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- 右：問題ナビゲーションパネル (デスクトップ版) -->
+      <aside class="w-80 bg-white border-l border-slate-200 flex flex-col shrink-0 hidden lg:flex">
+        <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+          <h2 class="font-bold text-slate-700 flex items-center gap-1.5 text-sm">
+            <i class="lucide-layout-grid text-slate-400"></i>
+            問題一覧
+          </h2>
+          <span class="text-xs text-slate-400" id="answered-stat">0/0 解答済み</span>
+        </div>
+        
+        <!-- ステータス凡例 -->
+        <div class="grid grid-cols-3 gap-1 px-4 py-3 bg-slate-50 border-b border-slate-100 text-[10px] text-slate-500 font-medium text-center">
+          <div class="flex items-center justify-center gap-1">
+            <span class="w-2.5 h-2.5 bg-slate-200 rounded"></span> 未回答
+          </div>
+          <div class="flex items-center justify-center gap-1">
+            <span class="w-2.5 h-2.5 bg-blue-600 rounded"></span> 解答済
+          </div>
+          <div class="flex items-center justify-center gap-1">
+            <span class="w-2.5 h-2.5 bg-amber-500 rounded"></span> フラグ付
+          </div>
+        </div>
+
+        <!-- グリッドボタン一覧 -->
+        <div class="flex-grow overflow-y-auto p-4">
+          <div id="question-grid" class="grid grid-cols-4 gap-2">
+            <!-- 動的に生成 -->
+          </div>
+        </div>
+
+        <!-- 解答提出サマリー -->
+        <div class="p-4 bg-slate-50 border-t border-slate-100">
+          <div class="text-xs text-slate-500 mb-3 flex justify-between">
+            <span>未回答: <span id="unanswered-count">0</span>問</span>
+            <span>フラグ: <span id="flag-count">0</span>問</span>
+          </div>
+          <button id="btn-sidebar-submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-lg text-sm transition-all shadow-sm">
+            解答完了・提出する
+          </button>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+
+  <!-- 3. 結果・レポート画面 -->
+  <div id="result-screen" class="hidden flex-grow overflow-y-auto py-8 px-4 flex justify-center">
+    <div class="max-w-4xl w-full flex flex-col gap-6">
+      
+      <!-- メイン結果概要カード -->
+      <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+        <div class="bg-slate-900 text-white px-6 py-6 text-center relative">
+          <div class="absolute top-4 right-4">
+            <span class="text-slate-400 font-mono text-xs">RESULT REPORT</span>
+          </div>
+          <h1 class="text-2xl font-bold mb-2" id="result-exam-title">試験タイトル</h1>
+          <p class="text-slate-400 text-sm">受験者: <span id="result-student-name" class="text-white font-medium">ゲスト</span></p>
+        </div>
+
+        <div class="p-6 md:p-8 flex flex-col md:flex-row items-center justify-around gap-8 border-b border-slate-100">
+          
+          <!-- 円グラフ風スコア表示 -->
+          <div class="relative flex items-center justify-center w-40 h-40">
+            <svg class="w-full h-full transform -rotate-90">
+              <circle cx="80" cy="80" r="70" stroke-width="12" stroke="#e2e8f0" fill="transparent"></circle>
+              <circle id="score-circle" cx="80" cy="80" r="70" stroke-width="12" stroke="#3b82f6" fill="transparent"
+                stroke-dasharray="440" stroke-dashoffset="440" class="transition-all duration-1000 ease-out"></circle>
+            </svg>
+            <div class="absolute flex flex-col items-center">
+              <span id="result-score" class="text-3xl font-extrabold text-slate-800">0</span>
+              <span class="text-xs text-slate-400 uppercase tracking-widest mt-0.5">SCORE</span>
+            </div>
+          </div>
+
+          <!-- 判定・メタデータ -->
+          <div class="flex-grow max-w-md space-y-4">
+            <div class="flex items-center gap-3">
+              <div id="result-badge" class="px-4 py-1.5 rounded-full text-sm font-extrabold shadow-sm">
+                判定中...
+              </div>
+              <span class="text-sm text-slate-500">合格基準: <span id="result-passing-score" class="font-bold">70</span>点以上 (<span id="result-passing-rate">70</span>%)</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-100 text-sm">
+              <div>
+                <span class="text-slate-400 text-xs block">総合得点</span>
+                <span class="font-bold text-slate-700 text-base" id="total-points-display">-- / -- 点</span>
+              </div>
+              <div>
+                <span class="text-slate-400 text-xs block">正解率</span>
+                <span class="font-bold text-slate-700 text-base" id="accuracy-display">-- %</span>
+              </div>
+              <div>
+                <span class="text-slate-400 text-xs block">解いた問題数</span>
+                <span class="font-bold text-slate-700 text-base" id="solved-count-display">-- / -- 問</span>
+              </div>
+              <div>
+                <span class="text-slate-400 text-xs block">経過時間</span>
+                <span class="font-bold text-slate-700 text-base" id="elapsed-time-display">-- 分 -- 秒</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 詳細レビュー・解説セクション -->
+      <div>
+        <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <i class="lucide-list-checks text-blue-600"></i>
+          問題別・詳細解説
+        </h2>
+
+        <div id="review-list" class="space-y-4">
+          <!-- 各問題の詳細レビューが動的に入る -->
+        </div>
+      </div>
+
+      <!-- アクションフッター -->
+      <div class="flex gap-4 justify-center py-4">
+        <button onclick="location.reload();" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-lg transition-all shadow text-sm">
+          <i class="lucide-rotate-ccw text-sm"></i>
+          もう一度受験する
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- 4. 各種ダイアログ/モーダル -->
+  <!-- 提出確認モーダル -->
+  <div id="submit-modal" class="hidden fixed inset-0 bg-slate-950/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-xl shadow-xl border border-slate-200 max-w-md w-full p-6">
+      <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+        <i class="lucide-alert-triangle text-amber-500"></i>
+        解答を提出して試験を終了しますか？
+      </h3>
+      <p class="text-slate-500 text-sm mb-4 leading-relaxed">
+        提出するとこれ以上解答を変更できません。未解答の問題や、見直しが必要なフラグ問題がないか確認してください。
+      </p>
+
+      <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 mb-6 text-xs text-slate-600 space-y-2">
+        <div class="flex justify-between">
+          <span>総問題数:</span>
+          <span class="font-bold text-slate-700" id="modal-total">0 問</span>
+        </div>
+        <div class="flex justify-between">
+          <span>解答済み:</span>
+          <span class="font-bold text-emerald-600" id="modal-answered">0 問</span>
+        </div>
+        <div class="flex justify-between text-amber-600">
+          <span>未解答 (残り):</span>
+          <span class="font-bold" id="modal-unanswered">0 問</span>
+        </div>
+        <div class="flex justify-between text-blue-600">
+          <span>見直しフラグあり:</span>
+          <span class="font-bold" id="modal-flags">0 問</span>
+        </div>
+      </div>
+
+      <div class="flex gap-3 justify-end">
+        <button id="btn-close-submit-modal" class="px-4 py-2.5 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-50 font-medium text-sm transition-all">
+          試験に戻る
+        </button>
+        <button id="btn-confirm-submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-sm shadow transition-all">
+          解答を提出する
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 時間切れ強制終了警告モーダル -->
+  <div id="timeout-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 text-center">
+      <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="lucide-hourglass-alert text-3xl"></i>
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 mb-2">試験時間が終了しました</h3>
+      <p class="text-slate-500 text-sm mb-6">
+        制限時間になりましたので、自動的に解答を提出し採点レポートへ移行します。
+      </p>
+      <button id="btn-timeout-confirm" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all shadow">
+        結果レポートを見る
+      </button>
+    </div>
+  </div>
+
+
+  <!-- 試験ロジックシステム -->
+  <script>
+    // --- 状態管理 ---
+    let state = {
+      studentName: "ゲスト",
+      startTime: null,
+      endTime: null,
+      timerInterval: null,
+      currentIndex: 0,
+      userAnswers: {},  // { questionId: 選択されたindex / index配列 / テキスト }
+      flaggedQuestions: {}, // { questionId: true/false }
+      examFinished: false,
+      timeLeftSeconds: EXAM_DATA.durationMinutes * 60,
+      totalSeconds: EXAM_DATA.durationMinutes * 60
+    };
+
+    // --- DOM要素 ---
+    const dom = {
+      // 画面
+      startScreen: document.getElementById('start-screen'),
+      examScreen: document.getElementById('exam-screen'),
+      resultScreen: document.getElementById('result-screen'),
+      
+      // スタート画面要素
+      startTitle: document.getElementById('start-title'),
+      startDescription: document.getElementById('start-description'),
+      startTimeText: document.getElementById('start-time'),
+      startCount: document.getElementById('start-count'),
+      startScoreInfo: document.getElementById('start-score-info'),
+      studentNameInput: document.getElementById('student-name'),
+      nameError: document.getElementById('name-error'),
+      btnStart: document.getElementById('btn-start'),
+
+      // 試験画面要素
+      examHeaderTitle: document.getElementById('exam-header-title'),
+      examStudentName: document.getElementById('exam-student-name'),
+      timerDisplay: document.getElementById('timer-display'),
+      timerBox: document.getElementById('timer-box'),
+      timerIcon: document.getElementById('timer-icon'),
+      currentQNum: document.getElementById('current-q-num'),
+      totalQNum: document.getElementById('total-q-num'),
+      qCategory: document.getElementById('q-category'),
+      qPoints: document.getElementById('q-points'),
+      qTypeBadge: document.getElementById('q-type-badge'),
+      qText: document.getElementById('q-text'),
+      answersContainer: document.getElementById('answers-container'),
+      btnFlag: document.getElementById('btn-flag'),
+      flagIcon: document.getElementById('flag-icon'),
+      flagText: document.getElementById('flag-text'),
+      btnPrev: document.getElementById('btn-prev'),
+      btnNext: document.getElementById('btn-next'),
+      progressPercent: document.getElementById('progress-percent'),
+      questionGrid: document.getElementById('question-grid'),
+      answeredStat: document.getElementById('answered-stat'),
+      unansweredCount: document.getElementById('unanswered-count'),
+      flagCount: document.getElementById('flag-count'),
+      
+      // モーダル
+      submitModal: document.getElementById('submit-modal'),
+      btnOpenSubmitModal: document.getElementById('btn-open-submit-modal'),
+      btnCloseSubmitModal: document.getElementById('btn-close-submit-modal'),
+      btnConfirmSubmit: document.getElementById('btn-confirm-submit'),
+      btnSidebarSubmit: document.getElementById('btn-sidebar-submit'),
+      timeoutModal: document.getElementById('timeout-modal'),
+      btnTimeoutConfirm: document.getElementById('btn-timeout-confirm'),
+      modalTotal: document.getElementById('modal-total'),
+      modalAnswered: document.getElementById('modal-answered'),
+      modalUnanswered: document.getElementById('modal-unanswered'),
+      modalFlags: document.getElementById('modal-flags'),
+
+      // リザルト要素
+      resultExamTitle: document.getElementById('result-exam-title'),
+      resultStudentName: document.getElementById('result-student-name'),
+      scoreCircle: document.getElementById('score-circle'),
+      resultScore: document.getElementById('result-score'),
+      resultBadge: document.getElementById('result-badge'),
+      resultPassingScore: document.getElementById('result-passing-score'),
+      resultPassingRate: document.getElementById('result-passing-rate'),
+      totalPointsDisplay: document.getElementById('total-points-display'),
+      accuracyDisplay: document.getElementById('accuracy-display'),
+      solvedCountDisplay: document.getElementById('solved-count-display'),
+      elapsedTimeDisplay: document.getElementById('elapsed-time-display'),
+      reviewList: document.getElementById('review-list')
+    };
+
+    // 初期化ロード
+    function init() {
+      // JSONデータを元にフロントを組み立て
+      dom.startTitle.textContent = EXAM_DATA.title;
+      dom.startDescription.textContent = EXAM_DATA.description;
+      dom.startTimeText.textContent = `${EXAM_DATA.durationMinutes} 分`;
+      dom.startCount.textContent = `${EXAM_DATA.questions.length} 問`;
+      
+      // 配点合計の算出
+      const totalPoints = EXAM_DATA.questions.reduce((sum, q) => sum + q.points, 0);
+      const passingPoints = Math.ceil(totalPoints * (EXAM_DATA.passingScoreRate / 100));
+      dom.startScoreInfo.textContent = `${totalPoints}点満点 (${passingPoints}点以上合格)`;
+
+      // イベントリスナーの登録
+      dom.btnStart.addEventListener('click', startExam);
+      dom.btnPrev.addEventListener('click', goToPrevQuestion);
+      dom.btnNext.addEventListener('click', goToNextQuestion);
+      dom.btnFlag.addEventListener('click', toggleFlag);
+      
+      dom.btnOpenSubmitModal.addEventListener('click', openSubmitModal);
+      dom.btnSidebarSubmit.addEventListener('click', openSubmitModal);
+      dom.btnCloseSubmitModal.addEventListener('click', closeSubmitModal);
+      dom.btnConfirmSubmit.addEventListener('click', submitExam);
+      dom.btnTimeoutConfirm.addEventListener('click', showResultReport);
+
+      // エンターキーで次の問題へ
+      document.addEventListener('keydown', handleGlobalKeydown);
+    }
+
+    // 試験開始
+    function startExam() {
+      const name = dom.studentNameInput.value.trim();
+      if (!name) {
+        dom.nameError.classList.remove('hidden');
+        return;
+      }
+      dom.nameError.classList.add('hidden');
+      state.studentName = name;
+      
+      // 画面切り替え
+      dom.startScreen.classList.add('hidden');
+      dom.examScreen.classList.remove('hidden');
+
+      // ヘッダー情報セット
+      dom.examHeaderTitle.textContent = EXAM_DATA.title;
+      dom.examStudentName.textContent = state.studentName;
+      dom.totalQNum.textContent = EXAM_DATA.questions.length;
+
+      // 試験開始時刻
+      state.startTime = new Date();
+
+      // タイマー開始
+      startTimer();
+
+      // 問題生成とサイドバー初期構築
+      buildQuestionGrid();
+      loadQuestion(0);
+      updateStatusStats();
+    }
+
+    // タイマー管理
+    function startTimer() {
+      updateTimerDisplay();
+      state.timerInterval = setInterval(() => {
+        state.timeLeftSeconds--;
+        updateTimerDisplay();
+
+        // 警告演出（残り3分以下）
+        if (state.timeLeftSeconds <= 180) {
+          dom.timerBox.classList.add('bg-red-950', 'border-red-500');
+          dom.timerDisplay.classList.add('text-red-400');
+          dom.timerIcon.classList.remove('text-blue-400');
+          dom.timerIcon.classList.add('text-red-500', 'animate-pulse');
+        }
+
+        if (state.timeLeftSeconds <= 0) {
+          clearInterval(state.timerInterval);
+          timeoutExam();
+        }
+      }, 1000);
+    }
+
+    // タイマー表示の更新
+    function updateTimerDisplay() {
+      const hours = Math.floor(state.timeLeftSeconds / 3600);
+      const minutes = Math.floor((state.timeLeftSeconds % 3600) / 60);
+      const seconds = state.timeLeftSeconds % 60;
+      dom.timerDisplay.textContent = 
+        `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    // 時間切れ処理
+    function timeoutExam() {
+      state.examFinished = true;
+      dom.submitModal.classList.add('hidden');
+      dom.timeoutModal.classList.remove('hidden');
+      // 自動採点処理
+      calculateScore();
+    }
+
+    // 右側問題グリッドの構築
+    function buildQuestionGrid() {
+      dom.questionGrid.innerHTML = '';
+      EXAM_DATA.questions.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        btn.id = `grid-btn-${idx}`;
+        btn.className = "h-11 rounded-lg font-bold border transition-all text-sm flex items-center justify-center relative";
+        btn.textContent = idx + 1;
+        btn.addEventListener('click', () => loadQuestion(idx));
+        dom.questionGrid.appendChild(btn);
+      });
+    }
+
+    // 指定された問題のロード
+    function loadQuestion(index) {
+      state.currentIndex = index;
+      const q = EXAM_DATA.questions[index];
+
+      // ナビゲーション状況
+      dom.currentQNum.textContent = index + 1;
+      dom.qCategory.textContent = q.category || "全般";
+      dom.qPoints.textContent = `[配点: ${q.points}点]`;
+
+      // 種類バッジ変更
+      if (q.type === 'single') {
+        dom.qTypeBadge.textContent = "単一選択";
+        dom.qTypeBadge.className = "bg-blue-50 text-blue-600 border border-blue-100 text-xs px-2 py-0.5 rounded font-medium";
+      } else if (q.type === 'multiple') {
+        dom.qTypeBadge.textContent = "複数選択";
+        dom.qTypeBadge.className = "bg-amber-50 text-amber-700 border border-amber-100 text-xs px-2 py-0.5 rounded font-medium";
+      } else if (q.type === 'text') {
+        dom.qTypeBadge.textContent = "記述式";
+        dom.qTypeBadge.className = "bg-emerald-50 text-emerald-700 border border-emerald-100 text-xs px-2 py-0.5 rounded font-medium";
+      }
+
+      // 問題文
+      dom.qText.textContent = q.question;
+
+      // フラグ状態をリフレッシュ
+      refreshFlagUI();
+
+      // 解答群エリアのリフレッシュ
+      renderAnswers(q);
+
+      // 前後ボタンコントロール
+      dom.btnPrev.disabled = (index === 0);
+      if (index === EXAM_DATA.questions.length - 1) {
+        dom.btnNext.innerHTML = '解答一覧へ <i class="lucide-layout-grid text-sm"></i>';
+      } else {
+        dom.btnNext.innerHTML = '次の問題 <i class="lucide-arrow-right text-sm"></i>';
+      }
+
+      // グリッドのアクティブ状態の更新
+      updateActiveGridBtn(index);
+    }
+
+    // 解答エリアを動的に描画
+    function renderAnswers(q) {
+      dom.answersContainer.innerHTML = '';
+      const currentAnswer = state.userAnswers[q.id];
+
+      if (q.type === 'single') {
+        q.options.forEach((opt, idx) => {
+          const isChecked = currentAnswer === idx;
+          const container = document.createElement('div');
+          container.className = `flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+            isChecked ? 'border-blue-600 bg-blue-50/50' : 'border-slate-200 bg-white hover:border-slate-300'
+          }`;
+          
+          container.innerHTML = `
+            <input type="radio" name="q-${q.id}" id="opt-${idx}" ${isChecked ? 'checked' : ''} class="w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500">
+            <label for="opt-${idx}" class="text-sm font-medium text-slate-700 flex-grow cursor-pointer select-none">${opt}</label>
+          `;
+
+          // 行ごとクリック対応
+          container.addEventListener('click', () => {
+            saveAnswer(q.id, idx);
+            renderAnswers(q); // 再描画
+          });
+          dom.answersContainer.appendChild(container);
+        });
+
+      } else if (q.type === 'multiple') {
+        const answersList = Array.isArray(currentAnswer) ? currentAnswer : [];
+        q.options.forEach((opt, idx) => {
+          const isChecked = answersList.includes(idx);
+          const container = document.createElement('div');
+          container.className = `flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+            isChecked ? 'border-blue-600 bg-blue-50/50' : 'border-slate-200 bg-white hover:border-slate-300'
+          }`;
+
+          container.innerHTML = `
+            <input type="checkbox" id="opt-${idx}" ${isChecked ? 'checked' : ''} class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
+            <label for="opt-${idx}" class="text-sm font-medium text-slate-700 flex-grow cursor-pointer select-none">${opt}</label>
+          `;
+
+          container.addEventListener('click', (e) => {
+            // チェックボックス本体がトリガーされた場合の二重検知防止
+            if (e.target.tagName === 'INPUT') return;
+            
+            let newAnswers = [...answersList];
+            if (isChecked) {
+              newAnswers = newAnswers.filter(item => item !== idx);
+            } else {
+              newAnswers.push(idx);
+            }
+            saveAnswer(q.id, newAnswers);
+            renderAnswers(q);
+          });
+
+          // チェックボックス自体の変更
+          const input = container.querySelector('input');
+          input.addEventListener('change', () => {
+            let newAnswers = [...answersList];
+            if (input.checked) {
+              newAnswers.push(idx);
+            } else {
+              newAnswers = newAnswers.filter(item => item !== idx);
+            }
+            saveAnswer(q.id, newAnswers);
+            renderAnswers(q);
+          });
+
+          dom.answersContainer.appendChild(container);
+        });
+
+      } else if (q.type === 'text') {
+        const value = currentAnswer || "";
+        const inputArea = document.createElement('div');
+        inputArea.className = "space-y-2";
+        inputArea.innerHTML = `
+          <textarea id="text-answer" rows="4" placeholder="${q.placeholder || 'ここに解答を入力してください'}"
+            class="w-full p-4 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all resize-none">${value}</textarea>
+          <p class="text-xs text-slate-400">※ 入力すると自動的に解答として記録されます。</p>
+        `;
+
+        const textarea = inputArea.querySelector('textarea');
+        textarea.addEventListener('input', (e) => {
+          saveAnswer(q.id, e.target.value);
+        });
+
+        dom.answersContainer.appendChild(inputArea);
+      }
+    }
+
+    // 解答をデータに保存
+    function saveAnswer(questionId, value) {
+      if (value === "" || (Array.isArray(value) && value.length === 0)) {
+        delete state.userAnswers[questionId];
+      } else {
+        state.userAnswers[questionId] = value;
+      }
+      updateStatusStats();
+    }
+
+    // フラグのトグル
+    function toggleFlag() {
+      const q = EXAM_DATA.questions[state.currentIndex];
+      state.flaggedQuestions[q.id] = !state.flaggedQuestions[q.id];
+      refreshFlagUI();
+      updateStatusStats();
+    }
+
+    function refreshFlagUI() {
+      const q = EXAM_DATA.questions[state.currentIndex];
+      const isFlagged = !!state.flaggedQuestions[q.id];
+
+      if (isFlagged) {
+        dom.btnFlag.classList.remove('text-slate-400', 'border-slate-200', 'hover:border-amber-300');
+        dom.btnFlag.classList.add('text-amber-500', 'border-amber-400', 'bg-amber-50/50');
+        dom.flagIcon.className = "lucide-flag fill-amber-500";
+        dom.flagText.textContent = "フラグ解除";
+      } else {
+        dom.btnFlag.classList.add('text-slate-400', 'border-slate-200', 'hover:border-amber-300');
+        dom.btnFlag.classList.remove('text-amber-500', 'border-amber-400', 'bg-amber-50/50');
+        dom.flagIcon.className = "lucide-flag";
+        dom.flagText.textContent = "見直しフラグ";
+      }
+    }
+
+    // 解答統計・状況の更新 (右側のインジケーターなど)
+    function updateStatusStats() {
+      let answeredCount = 0;
+      let flaggedCount = 0;
+
+      EXAM_DATA.questions.forEach((q, idx) => {
+        const gridBtn = document.getElementById(`grid-btn-${idx}`);
+        if (!gridBtn) return;
+
+        const hasAnswer = state.userAnswers[q.id] !== undefined;
+        const isFlagged = !!state.flaggedQuestions[q.id];
+
+        // クラス初期化
+        gridBtn.className = "h-11 rounded-lg font-bold border transition-all text-sm flex items-center justify-center relative";
+
+        if (isFlagged) {
+          // フラグ優先
+          gridBtn.classList.add('bg-amber-500', 'text-white', 'border-amber-500');
+          flaggedCount++;
+          if (hasAnswer) {
+            // 解答済フラグは右上ドットを追加
+            const dot = document.createElement('span');
+            dot.className = "absolute top-1 right-1 w-2 h-2 bg-blue-300 rounded-full";
+            gridBtn.appendChild(dot);
+            answeredCount++;
+          }
+        } else if (hasAnswer) {
+          gridBtn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+          answeredCount++;
+        } else {
+          gridBtn.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-300', 'hover:bg-slate-200');
+        }
+
+        // アクティブ表示を維持
+        if (state.currentIndex === idx) {
+          gridBtn.classList.add('ring-2', 'ring-slate-900', 'ring-offset-2');
+        }
+      });
+
+      // 統計テキスト更新
+      dom.answeredStat.textContent = `${answeredCount}/${EXAM_DATA.questions.length} 解答済み`;
+      dom.unansweredCount.textContent = EXAM_DATA.questions.length - answeredCount;
+      dom.flagCount.textContent = flaggedCount;
+
+      // 進捗%
+      const percent = Math.round((answeredCount / EXAM_DATA.questions.length) * 100);
+      dom.progressPercent.textContent = percent;
+    }
+
+    // アクティブな問題にグリッド枠線を当てる
+    function updateActiveGridBtn(activeIndex) {
+      EXAM_DATA.questions.forEach((_, idx) => {
+        const gridBtn = document.getElementById(`grid-btn-${idx}`);
+        if (gridBtn) {
+          if (idx === activeIndex) {
+            gridBtn.classList.add('ring-2', 'ring-slate-900', 'ring-offset-2');
+          } else {
+            gridBtn.classList.remove('ring-2', 'ring-slate-900', 'ring-offset-2');
+          }
+        }
+      });
+    }
+
+    // 遷移ボタン
+    function goToPrevQuestion() {
+      if (state.currentIndex > 0) {
+        loadQuestion(state.currentIndex - 1);
+      }
+    }
+
+    function goToNextQuestion() {
+      if (state.currentIndex < EXAM_DATA.questions.length - 1) {
+        loadQuestion(state.currentIndex + 1);
+      } else {
+        openSubmitModal();
+      }
+    }
+
+    function handleGlobalKeydown(e) {
+      // ALT+Nで次へ、ALT+Pで前へ
+      if (e.altKey && e.key === 'n') {
+        goToNextQuestion();
+      }
+      if (e.altKey && e.key === 'p') {
+        goToPrevQuestion();
+      }
+    }
+
+    // 解答提出モーダル操作
+    function openSubmitModal() {
+      const total = EXAM_DATA.questions.length;
+      let answered = 0;
+      let flags = 0;
+
+      EXAM_DATA.questions.forEach(q => {
+        if (state.userAnswers[q.id] !== undefined) answered++;
+        if (state.flaggedQuestions[q.id]) flags++;
+      });
+
+      dom.modalTotal.textContent = `${total} 問`;
+      dom.modalAnswered.textContent = `${answered} 問`;
+      dom.modalUnanswered.textContent = `${total - answered} 問`;
+      dom.modalFlags.textContent = `${flags} 問`;
+
+      dom.submitModal.classList.remove('hidden');
+    }
+
+    function closeSubmitModal() {
+      dom.submitModal.classList.add('hidden');
+    }
+
+    // 試験終了・採点実行
+    function submitExam() {
+      state.examFinished = true;
+      state.endTime = new Date();
+      clearInterval(state.timerInterval);
+
+      dom.submitModal.classList.add('hidden');
+      
+      // 自動採点・リザルトの作成
+      calculateScore();
+      showResultReport();
+    }
+
+    // 自動採点ロジック
+    let evaluationResult = null; // 結果保持用
+    function calculateScore() {
+      let totalEarnedPoints = 0;
+      let maxPoints = 0;
+      let correctCount = 0;
+      const questionResults = [];
+
+      EXAM_DATA.questions.forEach(q => {
+        maxPoints += q.points;
+        const answer = state.userAnswers[q.id];
+        let isCorrect = false;
+
+        if (q.type === 'single') {
+          isCorrect = (answer === q.correctAnswer);
+        } else if (q.type === 'multiple') {
+          // 配列同士の比較
+          const userAnsArr = Array.isArray(answer) ? [...answer].sort() : [];
+          const correctAnsArr = Array.isArray(q.correctAnswer) ? [...q.correctAnswer].sort() : [];
+          isCorrect = JSON.stringify(userAnsArr) === JSON.stringify(correctAnsArr);
+        } else if (q.type === 'text') {
+          // 記述式の採点（トリムして大文字小文字無視、別解も含む）
+          if (answer !== undefined && answer !== null) {
+            const userStr = String(answer).trim().toLowerCase();
+            const correctStr = String(q.correctAnswer).trim().toLowerCase();
+            
+            // 本来の正解
+            isCorrect = (userStr === correctStr);
+            
+            // 別解の検証
+            if (!isCorrect && q.alternativeAnswers) {
+              isCorrect = q.alternativeAnswers.some(alt => String(alt).trim().toLowerCase() === userStr);
+            }
+          }
+        }
+
+        if (isCorrect) {
+          totalEarnedPoints += q.points;
+          correctCount++;
+        }
+
+        questionResults.push({
+          question: q,
+          userAnswer: answer,
+          isCorrect: isCorrect
+        });
+      });
+
+      const accuracy = maxPoints > 0 ? Math.round((totalEarnedPoints / maxPoints) * 100) : 0;
+      const passed = accuracy >= EXAM_DATA.passingScoreRate;
+
+      // 経過時間の計算
+      const actualEndTime = state.endTime || new Date();
+      const diffMs = actualEndTime - state.startTime;
+      const diffSec = Math.floor(diffMs / 1000);
+      const elapsedMinutes = Math.floor(diffSec / 60);
+      const elapsedSeconds = diffSec % 60;
+
+      evaluationResult = {
+        totalPoints: maxPoints,
+        earnedPoints: totalEarnedPoints,
+        accuracy: accuracy,
+        passed: passed,
+        correctCount: correctCount,
+        totalQuestions: EXAM_DATA.questions.length,
+        solvedCount: Object.keys(state.userAnswers).length,
+        elapsedMinutes: elapsedMinutes,
+        elapsedSeconds: elapsedSeconds,
+        details: questionResults
+      };
+    }
+
+    // 結果画面の描画
+    function showResultReport() {
+      dom.examScreen.classList.add('hidden');
+      dom.timeoutModal.classList.add('hidden');
+      dom.resultScreen.classList.remove('hidden');
+
+      const res = evaluationResult;
+      
+      // テキスト埋め込み
+      dom.resultExamTitle.textContent = EXAM_DATA.title;
+      dom.resultStudentName.textContent = state.studentName;
+      dom.resultScore.textContent = `${res.accuracy}%`;
+      dom.resultPassingScore.textContent = Math.ceil(res.totalPoints * (EXAM_DATA.passingScoreRate / 100));
+      dom.resultPassingRate.textContent = EXAM_DATA.passingScoreRate;
+
+      dom.totalPointsDisplay.textContent = `${res.earnedPoints} / ${res.totalPoints} 点`;
+      dom.accuracyDisplay.textContent = `${res.accuracy} %`;
+      dom.solvedCountDisplay.textContent = `${res.solvedCount} / ${res.totalQuestions} 問`;
+      dom.elapsedTimeDisplay.textContent = `${res.elapsedMinutes} 分 ${res.elapsedSeconds} 秒`;
+
+      // 合格判定バッジ
+      if (res.passed) {
+        dom.resultBadge.textContent = "合格 (PASSED)";
+        dom.resultBadge.className = "px-4 py-1.5 rounded-full text-sm font-extrabold shadow-sm bg-emerald-100 text-emerald-800 border border-emerald-300";
+      } else {
+        dom.resultBadge.textContent = "不合格 (FAILED)";
+        dom.resultBadge.className = "px-4 py-1.5 rounded-full text-sm font-extrabold shadow-sm bg-rose-100 text-rose-800 border border-rose-300";
+      }
+
+      // サークル進捗アニメーション
+      const dashOffset = 440 - (440 * res.accuracy) / 100;
+      // 描画後少しおいてアニメーションを開始
+      setTimeout(() => {
+        dom.scoreCircle.setAttribute('stroke-dashoffset', dashOffset);
+        dom.scoreCircle.setAttribute('stroke', res.passed ? '#10b981' : '#f43f5e'); // 緑 or 赤
+      }, 300);
+
+      // 解説セクションの描画
+      buildReviewList(res.details);
+    }
+
+    // 問題別のレビュー・解説ブロック構築
+    function buildReviewList(details) {
+      dom.reviewList.innerHTML = '';
+
+      details.forEach((item, idx) => {
+        const q = item.question;
+        const block = document.createElement('div');
+        block.className = `p-6 rounded-xl border bg-white shadow-sm space-y-4 ${
+          item.isCorrect ? 'border-emerald-200' : 'border-rose-200'
+        }`;
+
+        // 正誤ヘッダー
+        let statusBadge = '';
+        if (item.isCorrect) {
+          statusBadge = `
+            <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded">
+              <i class="lucide-check-circle-2 text-sm"></i> 正解
+            </span>`;
+        } else {
+          statusBadge = `
+            <span class="inline-flex items-center gap-1 bg-rose-100 text-rose-800 text-xs font-bold px-2.5 py-1 rounded">
+              <i class="lucide-x-circle text-sm"></i> 不正解
+            </span>`;
+        }
+
+        // 受験者の回答内容を文字列化
+        let userAnsStr = '未入力';
+        if (item.userAnswer !== undefined && item.userAnswer !== null) {
+          if (q.type === 'single') {
+            userAnsStr = q.options[item.userAnswer] || '不正な選択';
+          } else if (q.type === 'multiple') {
+            userAnsStr = item.userAnswer.map(idx => q.options[idx]).join(' , ');
+          } else if (q.type === 'text') {
+            userAnsStr = item.userAnswer;
+          }
+        }
+
+        // 正解の解答内容を文字列化
+        let correctAnsStr = '';
+        if (q.type === 'single') {
+          correctAnsStr = q.options[q.correctAnswer];
+        } else if (q.type === 'multiple') {
+          correctAnsStr = q.correctAnswer.map(idx => q.options[idx]).join(' , ');
+        } else if (q.type === 'text') {
+          correctAnsStr = q.correctAnswer;
+          if (q.alternativeAnswers && q.alternativeAnswers.length > 0) {
+            correctAnsStr += ` (別解: ${q.alternativeAnswers.join(', ')})`;
+          }
+        }
+
+        block.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-slate-800">問 ${idx + 1}</span>
+              <span class="text-xs text-slate-400">| [配点: ${q.points}点] | カテゴリ: ${q.category || "なし"}</span>
+            </div>
+            ${statusBadge}
+          </div>
+
+          <div>
+            <p class="text-slate-700 text-sm font-medium leading-relaxed whitespace-pre-line">${q.question}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg text-xs leading-relaxed">
+            <div>
+              <span class="text-slate-400 block font-semibold mb-1">あなたの解答:</span>
+              <span class="font-bold ${item.isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAnsStr}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block font-semibold mb-1">正解:</span>
+              <span class="font-bold text-slate-800">${correctAnsStr}</span>
+            </div>
+          </div>
+
+          <div class="bg-blue-50/50 p-4 rounded-lg border border-blue-100 text-xs text-slate-700 leading-relaxed">
+            <h4 class="font-bold text-blue-800 flex items-center gap-1 mb-1.5">
+              <i class="lucide-lightbulb text-sm"></i> 解説
+            </h4>
+            <p class="whitespace-pre-line">${q.explanation || 'この問題に解説はありません。'}</p>
+          </div>
+        `;
+
+        dom.reviewList.appendChild(block);
+      });
+    }
+
+    // ページのロード完了時に実行
+    window.onload = function() {
+      init();
+    };
+  </script>
+</body>
+</html>
