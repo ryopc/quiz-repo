@@ -61,7 +61,7 @@
         <p>・ただしいと おもうものを １つ えらんでね。</p>
         <p>・<strong>１６もん</strong> より おおく せいかいすると「ごうかく」だよ！</p>
       </div>
-      <button onclick="startGame()" class="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white font-bold text-xl md:text-2xl px-12 py-5 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition duration-200 border-b-4 border-teal-700">
+      <button onclick="startGame()" class="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white font-bold text-xl md:text-2xl px-12 py-5 rounded-full shadow-lg transform hover:scale-105 active:scale-95 transition duration-200">
         スタートする！🏁
       </button>
     </div>
@@ -113,7 +113,7 @@
           あなたは ITけんてい ２きゅうにおいて、たいへん ゆうしゅうな せいせきを おさめました。<br>よって ここに ごうかくを しょうします。
         </p>
         <p class="text-right text-gray-600 mt-4 text-xs md:text-sm font-bold">
-          ITけんてい じっし いんかい より 🏅
+          ryopc こうしき より 🏅
         </p>
       </div>
 
@@ -142,7 +142,7 @@
   <!-- JavaScriptによるクイズ制御 -->
   <script>
     // 20問のクイズデータ（漢字交じり、3・4年生向け、普通レベル、絵文字付き）
-    const questions = [
+    const questionPool = [
       {
         emoji: "🖱️",
         text: "マウスを すばやく ２回（かい）カチカチと おすことを なにという？",
@@ -265,8 +265,20 @@
       }
     ];
 
+    let questions = [];
     let currentQuestionIndex = 0;
     let score = 0;
+    let shuffledAnswers = {};
+
+    // Fisher-Yatesシャッフル
+    function shuffleArray(array) {
+      const result = [...array];
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+      return result;
+    }
 
     // Web Audio API による効果音生成（外部ファイル不要で動作）
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -334,8 +346,11 @@
       if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
+      // 問題をシャッフル
+      questions = shuffleArray(questionPool);
       currentQuestionIndex = 0;
       score = 0;
+      shuffledAnswers = {};
       document.getElementById('start-screen').classList.add('hidden');
       document.getElementById('result-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('hidden');
@@ -364,6 +379,11 @@
 
       document.getElementById('question-text').innerText = q.text;
 
+      // 選択肢をシャッフル
+      const shuffledChoices = shuffleArray(q.choices);
+      const correctAnswerNewIndex = shuffledChoices.indexOf(q.choices[q.answer]);
+      shuffledAnswers[currentQuestionIndex] = correctAnswerNewIndex;
+
       // 選択肢ボタンの作成
       const choicesContainer = document.getElementById('choices-container');
       choicesContainer.innerHTML = '';
@@ -375,9 +395,9 @@
         'from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600 border-teal-600 text-white'
       ];
 
-      q.choices.forEach((choice, index) => {
+      shuffledChoices.forEach((choice, index) => {
         const btn = document.createElement('button');
-        btn.className = `w-full bg-gradient-to-r ${colors[index % colors.length]} font-bold text-lg md:text-xl py-4 px-6 rounded-2xl shadow border-b-4 transform active:scale-95 transition-all text-left flex items-center space-x-4`;
+        btn.className = `w-full bg-gradient-to-r ${colors[index % colors.length]} font-bold text-lg md:text-xl py-4 px-6 rounded-2xl shadow border-b-4 transform active:scale-95 transition-all text-left flex items-center gap-3`;
         
         // 選択肢の番号表示
         const badge = document.createElement('span');
@@ -397,8 +417,7 @@
 
     // 選択肢が選ばれたときの判定
     function selectChoice(selectedIndex) {
-      const q = questions[currentQuestionIndex];
-      const isCorrect = (selectedIndex === q.answer);
+      const isCorrect = (selectedIndex === shuffledAnswers[currentQuestionIndex]);
 
       // フィードバック表示の準備
       const overlay = document.getElementById('feedback-overlay');
