@@ -358,47 +358,6 @@
             font-size: 0.85rem;
             opacity: 0.95;
         }
-#special-mobile-chat-container {
-    display: none; /* JSで表示を切り替える前提 */
-    position: fixed;
-    bottom: 32px;
-    right: 32px;
-    z-index: 99999;
-    /* 基準点を追加 */
-    position: relative; 
-}
-
-#special-mobile-chat-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 28px;
-    /* フォールバック（変数が無いときの代替色）を追加 */
-    background: var(--gradient-orange, linear-gradient(135deg, #ff7e5f, #feb47b));
-    color: var(--white, #ffffff);
-    border: none;
-    font-size: 1.1rem;
-    font-weight: 800;
-    border-radius: 9999px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* ボタンを立体的に見せる装飾 */
-}
-
-#special-mobile-close-btn {
-    position: absolute;
-    top: -8px;
-    left: -8px;
-    width: 28px;
-    height: 28px;
-    background: var(--dark, #333333);
-    color: var(--white, #ffffff);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--white, #ffffff);
-    cursor: pointer; /* クリック可能であることを明示 */
-}
 
         /* --- CTA ボタン --- */
         .cta-buttons {
@@ -903,16 +862,8 @@
             </div>
         </section>
     </div>
-            <div id="special-mobile-chat-container">
-        <button id="special-mobile-chat-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 1px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            <span data-t="chat_btn">Chat Support</span>
-        </button>
-        <span id="special-mobile-close-btn">×</span>
-    </div>
-
     <footer>
-        <p data-t="footer_copyright">&copy; 2026 キッズIT検定. すべての権利を保有しています.</p>
+        <p data-t="footer_copyright">&copy; 2026 ryopc-org. すべての権利を保有しています.</p>
         <div class="status-badge">
             <span class="status-dot"></span>
             <span data-t="footer_status">ステータス: サービス稼働中</span>
