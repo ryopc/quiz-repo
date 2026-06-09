@@ -10,78 +10,93 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" id="silktide-consent-manager-css" href="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.css" xintegrity="sha384-IO1E/jCrQXyH5rwcI0SXP7OXw47JFqQNDQcKhbFvqnL2IunBxxwE2Ne5XyAmCqKs" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.js" xintegrity="sha384-j4NIMOecmtzMWe9GJADIIe5hTlHG63aiTQ/2XorW10RNyQJg+IU+xwFVDy45wBah" crossorigin="anonymous"></script>
-    <script>
-    window.silktideConsentManager.init({
-        backdrop: {
-            show: true
-        },
-        icon: {
-            position: "bottomLeft"
-        },
-        prompt: {
-            position: "bottomRight"
-        },
-        consentTypes: [
-            {
-                id: "essential",
-                label: "Essential",
-                description: "<p>These cookies are necessary for the website to function properly and cannot be switched off. They help with things like logging in and setting your privacy preferences.</p>",
-                required: true,
-                onAccept: function() {
-                    console.log('Add logic for the required Essential consent type here');
-                }
-            },
-            {
-                id: "analytics",
-                label: "Analytics",
-                description: "<p>These cookies help us improve the site by tracking which pages are most popular and how visitors move around the site.</p>",
-                required: false,
-                onAccept: function() {
-                    console.log('Add accept logic for Analytics consent type here');
-                },
-                onReject: function() {
-                    console.log('Add reject logic for Analytics consent type here');
-                }
-            },
-            {
-                id: "customer_support",
-                label: "Customer Support",
-                description: "<p>This cookie helps us provide you with the best possible support.</p>",
-                required: false,
-                scripts: [
-                    {
-                        url: "https://rawcdn.githack.com/ryopc/Archive/fc3acd1142e5108dc5263e4b112a768988cccb4d/Channel-Talk.js",
-                        load: "async"
-                    }
-                ],
-                onAccept: function() {
-                    // Custom script loaded: https://rawcdn.githack.com/ryopc/Archive/fc3acd1142e5108dc5263e4b112a768988cccb4d/Channel-Talk.js
-                }
-            }
-        ],
-        text: {
-            prompt: {
-                description: "<p>This site uses cookies to improve the user experience, provide personalized content, and analyze traffic.</p>",
-                acceptAllButtonText: "Accept all",
-                acceptAllButtonAccessibleLabel: "Accept all cookies",
-                rejectNonEssentialButtonText: "Reject non-essential",
-                rejectNonEssentialButtonAccessibleLabel: "Reject all non-essential cookies",
-                preferencesButtonText: "Preferences",
-                preferencesButtonAccessibleLabel: "Toggle preferences"
-            },
-            preferences: {
-                title: "Customize your cookie preferences",
-                description: "<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>",
-                saveButtonText: "Save and close",
-                saveButtonAccessibleLabel: "Save your cookie preferences",
-                creditLinkText: "Get this banner for free",
-                creditLinkAccessibleLabel: "Get this banner for free"
-            }
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" id="silktide-consent-manager-css" href="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.css" integrity="sha384-IO1E/jCrQXyH5rwcI0SXP7OXw47JFqQNDQcKhbFvqnL2IunBxxwE2Ne5XyAmCqKs" crossorigin="anonymous">
+<style id="silktide-consent-manager-overrides">
+#stcm-wrapper {
+  --boxShadow: -5px 5px 10px 0px #00000012, 0px 0px 50px 0px #0000001a;
+  --fontFamily: Helvetica Neue, Segoe UI, Arial, sans-serif;
+  --primaryColor: #533BE2;
+  --backgroundColor: #FFFFFF;
+  --textColor: #4B494B;
+  --backdropBackgroundColor: #00000033;
+  --backdropBackgroundBlur: 0px;
+  --iconColor: #533BE2;
+  --iconBackgroundColor: #FFFFFF;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.0/silktide-consent-manager.js" integrity="sha384-j4NIMOecmtzMWe9GJADIIe5hTlHG63aiTQ/2XorW10RNyQJg+IU+xwFVDy45wBah" crossorigin="anonymous"></script>
+<script>
+window.silktideConsentManager.init({
+  backdrop: {
+    show: true
+  },
+  icon: {
+    position: "bottomLeft"
+  },
+  prompt: {
+    position: "bottomRight"
+  },
+  consentTypes: [
+    {
+      id: "essential",
+      label: "Essential",
+      description: "<p>These cookies are necessary for the website to function properly and cannot be switched off. They help with things like logging in and setting your privacy preferences.</p>",
+      required: true,
+      onAccept: function() {
+        console.log('Add logic for the required Essential consent type here');
+      }
+    },
+    {
+      id: "analytics",
+      label: "Analytics",
+      description: "<p>These cookies help us improve the site by tracking which pages are most popular and how visitors move around the site.</p>",
+      required: false,
+      gtag: "analytics_storage",
+      scripts: [
+        {
+          url: "https://cdn.jsdelivr.net/gh/ryopc/Archive@main/tc.js",
+          load: "async"
         }
-    });
-    </script>
+      ],
+      onAccept: function() {
+        // Custom script loaded: https://cdn.jsdelivr.net/gh/ryopc/Archive@main/tc.js
+      }
+    },
+    {
+      id: "customer_support",
+      label: "customer support",
+      description: "Customer support using ChannelTalk",
+      required: false,
+      onAccept: function() {
+        console.log('Add accept logic for customer support consent type here');
+      },
+      onReject: function() {
+        console.log('Add reject logic for customer support consent type here');
+      }
+    }
+  ],
+  text: {
+    prompt: {
+      description: "<p>We use cookies on our site to enhance your user experience, provide personalized content, and analyze our traffic.</p>",
+      acceptAllButtonText: "Accept all",
+      acceptAllButtonAccessibleLabel: "Accept all cookies",
+      rejectNonEssentialButtonText: "Reject non-essential",
+      rejectNonEssentialButtonAccessibleLabel: "Reject all non-essential cookies",
+      preferencesButtonText: "Preferences",
+      preferencesButtonAccessibleLabel: "Toggle preferences"
+    },
+    preferences: {
+      title: "Customize your cookie preferences",
+      description: "<p>We respect your right to privacy. You can choose not to allow some types of cookies. Your cookie preferences will apply across our website.</p>",
+      saveButtonText: "Save and close",
+      saveButtonAccessibleLabel: "Save your cookie preferences",
+      creditLinkText: "Get this banner for free",
+      creditLinkAccessibleLabel: "Get this banner for free"
+    }
+  }
+});
+</script>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <style>
         :root {
